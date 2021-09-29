@@ -28,7 +28,7 @@
           {
             "description": "The apikey for the client",
             "in": "query",
-            "name": "apikey2",
+            "name": "apikey4",
             "required": true,
             "type": "string",
             "x-example": "aujc990kjbba"
