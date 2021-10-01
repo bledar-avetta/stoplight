@@ -11,7 +11,7 @@
     "https"
   ],
   "paths": {
-    "/v1/accounts/{account_id}/usersTest2": {
+    "/v1/accounts/{account_id}/usersTestMainCopy2": {
       "get": {
         "produces": [
           "application/json"
