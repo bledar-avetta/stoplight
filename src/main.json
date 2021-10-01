@@ -28,7 +28,7 @@
           {
             "description": "The apikey for the client",
             "in": "query",
-            "name": "apikey",
+            "name": "apikeyMaster",
             "required": true,
             "type": "string",
             "x-example": "aujc990kjbba"
@@ -3089,32 +3089,33 @@
             "schema": {
               "type": "array",
               "items": {
-              "properties": {
-                "formId": {
-                  "type": "string",
-                  "format": "numeric"
-                },
-                "comments": {
-                  "type": "string"
-                },
-                "createdDate": {
-                  "type": "string",
-                  "format": "UTC DateTime"
-                },
-                "createdBy": {
-                  "type": "string",
-                  "format": "firstname lastname"
+                "properties": {
+                  "formId": {
+                    "type": "string",
+                    "format": "numeric"
+                  },
+                  "comments": {
+                    "type": "string"
+                  },
+                  "createdDate": {
+                    "type": "string",
+                    "format": "UTC DateTime"
+                  },
+                  "createdBy": {
+                    "type": "string",
+                    "format": "firstname lastname"
+                  }
                 }
-              }
               }
             },
             "examples": {
-              "application/json": [{
-                "formId": "1234",
-                "comments": "This form was rejected due to insurance limit...",
-                "createdDate": "2021-04-29T15:59:34Z",
-                "createdBy": "John Doe"
-              },
+              "application/json": [
+                {
+                  "formId": "1234",
+                  "comments": "This form was rejected due to insurance limit...",
+                  "createdDate": "2021-04-29T15:59:34Z",
+                  "createdBy": "John Doe"
+                },
                 {
                   "formId": "1234",
                   "comments": "This form was rejected due to incomplete info",
@@ -3447,298 +3448,298 @@
       }
     },
     "/v1/forms": {
-        "get": {
-          "responses": {
-            "200": {
-              "description": "OK",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "supplierId": {
-                    "type": "integer"
-                  },
-                  "supplierName": {
-                    "type": "string"
-                  },
-                  "formId": {
-                    "type": "integer"
-                  },
-                  "formName": {
-                    "type": "string"
-                  },
-                  "formStatus": {
-                    "type": "string"
-                  },
-                  "formUpdateDate": {
-                    "type": "string"
-                  },
-                  "formScore": {
-                    "type": "integer"
-                  },
-                  "formYear": {
-                    "type": "string"
-                  },
-                  "formPeriod": {
-                    "type": "string"
-                  },
-                  "clientSites": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "clientId": {
-                          "type": "integer"
-                        },
-                        "clientName": {
-                          "type": "string"
-                        }
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "supplierId": {
+                  "type": "integer"
+                },
+                "supplierName": {
+                  "type": "string"
+                },
+                "formId": {
+                  "type": "integer"
+                },
+                "formName": {
+                  "type": "string"
+                },
+                "formStatus": {
+                  "type": "string"
+                },
+                "formUpdateDate": {
+                  "type": "string"
+                },
+                "formScore": {
+                  "type": "integer"
+                },
+                "formYear": {
+                  "type": "string"
+                },
+                "formPeriod": {
+                  "type": "string"
+                },
+                "clientSites": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "clientId": {
+                        "type": "integer"
+                      },
+                      "clientName": {
+                        "type": "string"
                       }
                     }
-                  },
-                  "categoryId": {
-                    "type": "integer"
-                  },
-                  "categoryName": {
-                    "type": "string"
-                  },
-                  "questionId": {
-                    "type": "integer"
-                  },
-                  "questionTitle": {
-                    "type": "string"
-                  },
-                  "question": {
-                    "type": "string"
-                  },
-                  "answer": {
-                    "type": "string"
-                  },
-                  "answerUpdateDate": {
-                    "type": "string"
                   }
+                },
+                "categoryId": {
+                  "type": "integer"
+                },
+                "categoryName": {
+                  "type": "string"
+                },
+                "questionId": {
+                  "type": "integer"
+                },
+                "questionTitle": {
+                  "type": "string"
+                },
+                "question": {
+                  "type": "string"
+                },
+                "answer": {
+                  "type": "string"
+                },
+                "answerUpdateDate": {
+                  "type": "string"
                 }
-              },
-              "examples": {
-                "application/json": [
-                  {
-                    "supplierId": 89010,
-                    "supplierName": "Bob's Plumbing Services",
-                    "formId": 1234,
-                    "formName": "Manual Audit",
-                    "formStatus": "published",
-                    "formUpdateDate": "2019-01-08 12:54:22",
-                    "formScore": 0,
-                    "formYear": "2019",
-                    "formPeriod": "2019-01-05 - 2020-01-05",
-                    "clientSites": [
-                      {
-                        "clientId": 123,
-                        "clientName": "Oil Rig"
-                      },
-                      {
-                        "clientId": 456,
-                        "clientName": "Chemical Refinery"
-                      }
-                    ],
-                    "categoryId": 111,
-                    "categoryName": "General Safety",
-                    "questionId": 222,
-                    "questionTitle": "",
-                    "question": "Have your workers been certified?",
-                    "answer": "Yes",
-                    "answerUpdateDate": "2019-01-08 12:54:22"
-                  }
-                ]
               }
-            }
-          },
-          "summary": "Get Form Data",
-          "description": "Updated version of the `Audit` endpoint which uses updated nomenclature and includes the applicable client sites a particular form is valid for.\n\nRetrieves a set of `Form` data based on the provided request/pagination parameters. \nThe `href` field in the schema below will only return for `Form` data where the question requires a file upload as an answer. \nOnly active suppliers that have approved connections to clients will be returned in this endpoint.",
-          "tags": [
-            "Form Endpoint"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "in": "query",
-              "name": "apikey",
-              "type": "string",
-              "description": "The apikey for the client",
-              "required": true
             },
-            {
-              "in": "query",
-              "name": "start",
-              "type": "number",
-              "default": "1",
-              "description": "The record to start with for pagination (1-based, not 0-based)",
-              "minimum": 1
-            },
-            {
-              "in": "query",
-              "name": "limit",
-              "type": "number",
-              "default": "500",
-              "description": "The total number of records to return, maximum of 3000",
-              "minimum": 1,
-              "maximum": 3000
-            },
-            {
-              "in": "query",
-              "name": "supplierId",
-              "type": "string",
-              "description": "Optional filter for a supplier"
-            },
-            {
-              "in": "query",
-              "name": "clientId",
-              "type": "string",
-              "description": "Optional filter for a client account"
-            },
-            {
-              "in": "query",
-              "name": "formId",
-              "type": "string",
-              "description": "Optional filter for a specific form"
-            },
-            {
-              "in": "query",
-              "name": "year",
-              "type": "string",
-              "description": "Optional filter for a form year",
-              "enum": [
-                "2019+"
+            "examples": {
+              "application/json": [
+                {
+                  "supplierId": 89010,
+                  "supplierName": "Bob's Plumbing Services",
+                  "formId": 1234,
+                  "formName": "Manual Audit",
+                  "formStatus": "published",
+                  "formUpdateDate": "2019-01-08 12:54:22",
+                  "formScore": 0,
+                  "formYear": "2019",
+                  "formPeriod": "2019-01-05 - 2020-01-05",
+                  "clientSites": [
+                    {
+                      "clientId": 123,
+                      "clientName": "Oil Rig"
+                    },
+                    {
+                      "clientId": 456,
+                      "clientName": "Chemical Refinery"
+                    }
+                  ],
+                  "categoryId": 111,
+                  "categoryName": "General Safety",
+                  "questionId": 222,
+                  "questionTitle": "",
+                  "question": "Have your workers been certified?",
+                  "answer": "Yes",
+                  "answerUpdateDate": "2019-01-08 12:54:22"
+                }
               ]
-            },
-            {
-              "in": "query",
-              "name": "categoryId",
-              "type": "string",
-              "description": "Optional filter for a category"
-            },
-            {
-              "in": "query",
-              "name": "questionId",
-              "type": "string",
-              "description": "Optional filter for a question"
-            },
-            {
-              "in": "query",
-              "name": "modifiedAfter",
-              "type": "string",
-              "description": "Optional value to return records after the specified date and time"
-            },
-            {
-              "in": "query",
-              "name": "archivedOnly",
-              "type": "boolean",
-              "description": "Optional value to return archived only records"
-            },
-            {
-              "in": "query",
-              "name": "activeOnly",
-              "type": "boolean",
-              "description": "Optional value to return active only records"
             }
-          ]
-        }
-      },
-    "/v1/forms/count": {
-        "get": {
-          "responses": {
-            "200": {
-              "description": "",
-              "schema": {
-                "type": "object",
-                "properties": {}
-              },
-              "examples": {
-                "application/json": [
-                  {
-                    "total_records": 1845
-                  }
-                ]
-              }
-            }
+          }
+        },
+        "summary": "Get Form Data",
+        "description": "Updated version of the `Audit` endpoint which uses updated nomenclature and includes the applicable client sites a particular form is valid for.\n\nRetrieves a set of `Form` data based on the provided request/pagination parameters. \nThe `href` field in the schema below will only return for `Form` data where the question requires a file upload as an answer. \nOnly active suppliers that have approved connections to clients will be returned in this endpoint.",
+        "tags": [
+          "Form Endpoint"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "apikey",
+            "type": "string",
+            "description": "The apikey for the client",
+            "required": true
           },
-          "summary": "Get Form Count",
-          "tags": [
-            "Form Endpoint"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "in": "query",
-              "name": "apikey",
-              "type": "string",
-              "description": "The apikey for the client",
-              "required": true
-            },
-            {
-              "in": "query",
-              "name": "supplierId",
-              "type": "string",
-              "description": "Optional filter for a supplier"
-            },
-            {
-              "in": "query",
-              "name": "clientId",
-              "type": "string",
-              "description": "Optional filter for a client account"
-            },
-            {
-              "in": "query",
-              "name": "formId",
-              "type": "string",
-              "description": "Optional filter for a specific form"
-            },
-            {
-              "in": "query",
-              "name": "year",
-              "type": "string",
-              "description": "Optional filter for a form year",
-              "enum": [
-                "2019+"
-              ]
-            },
-            {
-              "in": "query",
-              "name": "categoryId",
-              "type": "string",
-              "description": "Optional filter for a category"
-            },
-            {
-              "in": "query",
-              "name": "questionId",
-              "type": "string",
-              "description": "Optional filter for a question"
-            },
-            {
-              "in": "query",
-              "name": "modifiedAfter",
-              "type": "string",
-              "description": "Optional value to return records after the specified date and time"
-            },
-            {
-              "in": "query",
-              "name": "archivedOnly",
-              "type": "boolean",
-              "description": "Optional value to return archived only records"
-            },
-            {
-              "in": "query",
-              "name": "activeOnly",
-              "type": "boolean",
-              "description": "Optional value to return active only records"
-            }
-          ],
-          "description": "Returns the total number of records from the `Form` Endpoint. All query parameters from the `Form` endpoint are also applicable in this endpoint as those values will be used in determining the number of records given the provided parameters."
-        }
+          {
+            "in": "query",
+            "name": "start",
+            "type": "number",
+            "default": "1",
+            "description": "The record to start with for pagination (1-based, not 0-based)",
+            "minimum": 1
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "number",
+            "default": "500",
+            "description": "The total number of records to return, maximum of 3000",
+            "minimum": 1,
+            "maximum": 3000
+          },
+          {
+            "in": "query",
+            "name": "supplierId",
+            "type": "string",
+            "description": "Optional filter for a supplier"
+          },
+          {
+            "in": "query",
+            "name": "clientId",
+            "type": "string",
+            "description": "Optional filter for a client account"
+          },
+          {
+            "in": "query",
+            "name": "formId",
+            "type": "string",
+            "description": "Optional filter for a specific form"
+          },
+          {
+            "in": "query",
+            "name": "year",
+            "type": "string",
+            "description": "Optional filter for a form year",
+            "enum": [
+              "2019+"
+            ]
+          },
+          {
+            "in": "query",
+            "name": "categoryId",
+            "type": "string",
+            "description": "Optional filter for a category"
+          },
+          {
+            "in": "query",
+            "name": "questionId",
+            "type": "string",
+            "description": "Optional filter for a question"
+          },
+          {
+            "in": "query",
+            "name": "modifiedAfter",
+            "type": "string",
+            "description": "Optional value to return records after the specified date and time"
+          },
+          {
+            "in": "query",
+            "name": "archivedOnly",
+            "type": "boolean",
+            "description": "Optional value to return archived only records"
+          },
+          {
+            "in": "query",
+            "name": "activeOnly",
+            "type": "boolean",
+            "description": "Optional value to return active only records"
+          }
+        ]
       }
+    },
+    "/v1/forms/count": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            },
+            "examples": {
+              "application/json": [
+                {
+                  "total_records": 1845
+                }
+              ]
+            }
+          }
+        },
+        "summary": "Get Form Count",
+        "tags": [
+          "Form Endpoint"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "apikey",
+            "type": "string",
+            "description": "The apikey for the client",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "supplierId",
+            "type": "string",
+            "description": "Optional filter for a supplier"
+          },
+          {
+            "in": "query",
+            "name": "clientId",
+            "type": "string",
+            "description": "Optional filter for a client account"
+          },
+          {
+            "in": "query",
+            "name": "formId",
+            "type": "string",
+            "description": "Optional filter for a specific form"
+          },
+          {
+            "in": "query",
+            "name": "year",
+            "type": "string",
+            "description": "Optional filter for a form year",
+            "enum": [
+              "2019+"
+            ]
+          },
+          {
+            "in": "query",
+            "name": "categoryId",
+            "type": "string",
+            "description": "Optional filter for a category"
+          },
+          {
+            "in": "query",
+            "name": "questionId",
+            "type": "string",
+            "description": "Optional filter for a question"
+          },
+          {
+            "in": "query",
+            "name": "modifiedAfter",
+            "type": "string",
+            "description": "Optional value to return records after the specified date and time"
+          },
+          {
+            "in": "query",
+            "name": "archivedOnly",
+            "type": "boolean",
+            "description": "Optional value to return archived only records"
+          },
+          {
+            "in": "query",
+            "name": "activeOnly",
+            "type": "boolean",
+            "description": "Optional value to return active only records"
+          }
+        ],
+        "description": "Returns the total number of records from the `Form` Endpoint. All query parameters from the `Form` endpoint are also applicable in this endpoint as those values will be used in determining the number of records given the provided parameters."
+      }
+    }
   },
   "definitions": {
     "Address": {
@@ -3924,7 +3925,7 @@
       },
       "type": "object"
     },
-    "FormLatestActivity":{
+    "FormLatestActivity": {
       "type": "object",
       "properties": {
         "formId": {
@@ -3944,7 +3945,7 @@
         }
       }
     },
-    "FormApplicableActions":{
+    "FormApplicableActions": {
       "type": "object",
       "properties": {
         "formId": {
@@ -3970,7 +3971,7 @@
         }
       }
     },
-    "FormApproval":{
+    "FormApproval": {
       "type": "object",
       "properties": {
         "action": {
