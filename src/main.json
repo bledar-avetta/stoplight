@@ -11,7 +11,7 @@
     "https"
   ],
   "paths": {
-    "/v1/accounts/{account_id}/usersMainv2": {
+    "/v1/accounts/{account_id}/usersMainv7": {
       "get": {
         "produces": [
           "application/json"
@@ -28,7 +28,7 @@
           {
             "description": "The apikey for the client",
             "in": "query",
-            "name": "apikeyMasterv2",
+            "name": "apikeyMasterv7",
             "required": true,
             "type": "string",
             "x-example": "aujc990kjbba"
