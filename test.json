@@ -1,0 +1,87 @@
+{
+  "title": "Avetta API Documentation",
+  "logo": "https://next.stoplight.io/images/mark-light-bg.png",
+  "header": {
+    "nav": {
+      "left": [],
+      "right": [
+        {
+          "title": "API FAQ",
+          "path": "/apifaq"
+        },
+        {
+          "path": "/api-reference",
+          "title": "Connect API Reference"
+        },
+        {
+          "title": "Worker Management API Reference",
+          "path": "/wm-api-reference"
+        }
+      ]
+    }
+  },
+  "pages": {
+    "/": {
+      "title": "Introduction",
+      "data": {
+        "blocks": [
+          {
+            "type": "text",
+            "data": "# Client API Service\n\nThe Avetta API is a mechanism to allow our customers to retrieve Audit and Supplier data from Connect via application programming interface. The Avetta API is organized around REST and uses HTTP status codes and error payload responses to indicate API errors."
+          },
+          {
+            "type": "text",
+            "data": "[API FAQ](/apifaq)\n\n[Connect API Reference](/api-reference/Connect)\n\n[Connect API Best Practices](/Connect%20API%20Best%20Practices.md)\n\n[Worker Management API Reference](/wm-api-reference/WorkerManagement)"
+          }
+        ]
+      }
+    },
+    "/api-reference": {
+      "title": "API Reference",
+      "data": {
+        "children": [
+          {
+            "title": "Connect API",
+            "route": {
+              "path": "/Connect"
+            },
+            "data": {
+              "$ref": "./Connect Api.oas2.yml"
+            }
+          }
+        ],
+        "blocks": []
+      }
+    },
+    "/wm-api-reference": {
+      "title": "Worker Management API Reference",
+      "data": {
+        "children": [
+          {
+            "title": "Worker Management API",
+            "route": {
+              "path": "/WorkerManagement"
+            },
+            "data": {
+              "$ref": "./Worker Management Api.oas2.yml"
+            }
+          }
+        ]
+      }
+    },
+    "/apifaq": {
+      "title": "API FAQ",
+      "data": {
+        "blocks": [
+          {
+            "type": "text",
+            "data": "**What type of API architecture is being used?**\n\nThe API architecture being used is based on a REST API which is a standard API protocol utilized by many modern applications. REST leverages less bandwidth, making it generally faster for internet usage.\n\n \n**What output format is delivered?**\n\nJSON format data is returned including any errors in the API Responses (output).\n\n \n\n**What does the Supplier API search include?**\n\nThe supplier API search shows information specific to your apikey and only displays Suppliers connected to your organization.\n\n \n\n**How accurate is the information being pulled?**\n\nThe information pulled is live production data and is the most accurate, up to date information available.\n\n \n\n**What endpoints are provided?**\n\nThe following Endpoints are provided:\n\n* Suppliers provides a list of supplier’s profile information including flag status\n* Suppliers Count provides the number of supplier records for that call\n* PQF/Audits provides requested PQF or Audits data for that call\n* Audits Count provides the number of audits data records for that call\n* Hierarchy provides a list of hierarchy/site data with each parent ID\n* Document provides a document file path\n* Supplier ID provides a list of supplier profile information including flag status\n* Insurance provides insurance policy names, types, and type details\n\n \n\n**What are the details of the Suppliers endpoints?**\n\nThe Supplier(s) end point provides the following information:\n\n* Supplier Name and Avetta ID\n* Primary Contact\n* Address\n* Billing Address\n* Avetta Account Status\n* System Flags and Forced Flags information:\n\t* Overall flag color and reasons\n\t* Detail (line item level) flag color and reasons\n* Supplier trades\n* Service type (on-site/off-site)\n\n \n\n**What does the Audits endpoint provide?**\n\nThe Audits end point data is coming from PQF / other audits and is mapped per client requirements. The data is presented in a Question and answer format.\n\n \n\n**What does the Documents endpoint provide?**\n\nThe Documents end point provides the FILE PATH for documents so Clients can download the document using that path.\n\n \n\n**What does the Suppliers or Audit count endpoint provide?**\n\nThe Suplier or Audits Count Endpoint provides the number of records available\n\n \n\n**What details does the ‘flags’ field provide?**\n\nThe ‘flags’ field returns the flags for a specific supplier across all connections within your hierarchy. Suppliers with connections to more than one site will have flags displayed for each related site.\n\n \n\n**What type of flags are displayed?**\n\nBoth forced flags and regular flags can be displayed. The forced flags are designated using the ‘is_forced’ field.\n\n \n\n**What are the ‘reasons’ being displayed describing?**\n\nThe reasons being displayed are describing why a Supplier flag is a specific compliance color.\n\n \n\n**What contact information is being pulled for the ‘phone’ and ‘fax’ fields?**\n\nThe ‘phone’ and ‘fax’ fields display the phone and fax number of the Suppliers’ indicated primary contact.\n\n**When is the ‘external_id’ field populated?**\n\nThe ‘external_id’ field is populated whenever the external ID is provided. The Client ID, Type and External ID is displayed.\n\n \n\n**What is the frequency of the Pull?**\n\nPulls can be provided Daily or As-Needed. Daily Pull is recommended for Supplier, Audit or Document Endpoints. Pull As-Needed is recommended for Suppliers and Audit Counts.\n\n \n\n**What is the maximum number of records that can be returned?**\n\nThe maximum number of records that can be returned is 3,000, but each record provides deeper levels of information.  You will have to make multiple calls through the API if more than 3,000 records are needed.\n\n \n\n**What is the response time?**\n\nThe average response time is 10 to 15 seconds for every 3,000 supplier records\n\n \n\n**How do I access the API documentation?**\n\nYour account manager can provide you with a link and submit a ticket to request a login to Stoplight.io which contains all API technical documentation. An NDA will need to be signed before the Technical API Documentation is given.\n\n \n\n**What is Stoplight.io?**\n\nStoplight.io is a web-based API management system that provides access to technical documentation and allows users to view and test code and responses.\n\n \n\n**How long does it take to receive an API Key?**\n\nIt generally takes about 3 weeks to have an API key generated"
+          }
+        ]
+      }
+    }
+  },
+  "theme": {
+    "primary": "#3B99FC"
+  }
+}
