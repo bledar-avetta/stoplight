@@ -1,0 +1,35 @@
+{
+  "formats": [
+    "oas3",
+    "oas2",
+    "oas3.0",
+    "asyncapi2",
+    "oas3.1",
+    "json-schema",
+    "json-schema-loose",
+    "json-schema-draft4",
+    "json-schema-draft-2020-12",
+    "json-schema-draft-2019-09",
+    "json-schema-draft7",
+    "json-schema-draft6"
+  ],
+  "extends": [
+    "spectral:oas"
+  ],
+  "rules": {
+    "info-matches-stoplight": {
+      "description": "This is an example rule",
+      "message": "Info must contain Stoplight",
+      "given": "$.info",
+      "recommended": true,
+      "type": "style",
+      "then": {
+        "field": "title",
+        "function": "pattern",
+        "functionOptions": {
+          "match": "Stoplight"
+        }
+      }
+    }
+  }
+}
