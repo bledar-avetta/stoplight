@@ -7,7 +7,7 @@
   },
   "basePath": "/api/",
   "schemes": [
-    "ws"
+    "wss"
   ],
   "paths": {
     "/{version}/accounts/{id}": {
