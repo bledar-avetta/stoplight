@@ -5,8 +5,8 @@
     "title": "Worker Management",
     "version": ""
   },
-  "host": "api.avetta.com",
-  "basePath": "/api/",
+  "host": "/api/",
+  "basePath": "",
   "schemes": [
     "https"
   ],
