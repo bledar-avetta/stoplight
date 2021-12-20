@@ -657,7 +657,7 @@
             }
           }
         },
-        "description": "Gets the health of the API",
+        "description": "Gets the health of the API ok",
         "summary": "Health",
         "produces": [
           "application/json"
