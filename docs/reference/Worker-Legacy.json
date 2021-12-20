@@ -5,7 +5,7 @@
     "title": "Worker Management",
     "version": ""
   },
-  "host": "api/",
+  "host": "/api",
   "basePath": "",
   "paths": {
     "/{version}/accounts/{id}": {
