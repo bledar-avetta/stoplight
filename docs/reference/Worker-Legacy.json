@@ -5,9 +5,10 @@
     "title": "Worker Management",
     "version": ""
   },
-  
   "basePath": "/api/",
-  
+  "schemes": [
+    "ws"
+  ],
   "paths": {
     "/{version}/accounts/{id}": {
       "get": {
