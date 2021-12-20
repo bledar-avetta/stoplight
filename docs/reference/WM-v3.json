@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "WM v3",
+    "title": "WM jsonv3",
     "version": "1.0"
   },
   "servers": [
