@@ -1,0 +1,2585 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "The Avetta API is a mechanism to allow our customers to retrieve Audit and Supplier data from Connect via application programming interface. The Avetta API is organized around REST and uses HTTP status codes and error payload responses to indicate API errors.\n\nWe leverage the HTTP protocol features, like HTTP verbs and status codes, which are commonly used and are understood by off-the-shelf HTTP clients.\nAll API responses (including errors) will be returned in JSON format.\n\n#### Versioning <- IMPORTANT UPDATE MUST READ ->\n\nYou will notice in this documentation that the URL for this API is as follows: https://api.avetta.com/client-api/vX....\nThis URL contains `vX` to specify the particular version to be used when making the desired call. Different versions of the same endpoint may return different results, therefore it is important to note the versions of each endpoint in this documentation.\nPlease be aware of this as you check each endpoint.\n\n#### Authentication\n\nWhen using the API, include your secret API key in the request for the service to authenticate your account. This API Key will be provided to you by your point of contact in Avetta.\n\nAll API requests must be made over HTTPS. Calls to the service over HTTP will result in a 302 Redirect response to the HTTPS end-point. API requests without an apikey will fail.\n\n#### Errors\n\nAvetta uses conventional HTTP response codes to indicate the success or failure of an API request. In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error that failed given the information provided (e.g., a required parameter was omitted, an invalid account number, validation failure, etc.), and in rare situations, codes in the 5xx range indicate a server error.\n\n#### Pagination\n\nAvetta has a default maximum limit of 3000 results in one API call. In the case where the response returns more than the default limit, you must utilize pagination to retrieve the full data set. Avetta utilizes cursor-based pagination via optional start and limit query string parameters.\nThe start indicates the record to start with for pagination and the limit indicates the total number of records to return (maximum of 3000).\n\n#### Modified Records\n\nAn optional parameter available for both supplier and audit endpoints is the `modifiedAfter` field. This query string parameter takes in a string with the following format: `yyyy-MM-dd HH:mm:ss` using Coordinated Universal Time (UTC). This will return records that have been modified after the specified date and time. In the event that only a date, `yyyy-MM-dd`, is received the system will default the time to `00:00:00` UTC.\n\n\n#### Error Handling\n\nOur errors are listed below in the following format -> Code Error Number [Actual Message]: Description of the error.\n* Code 1 [Validation Failed]: An invalid API key was provided.\n* Code 2 [Invalid Parameters]: The start and/or limit parameters entered are not within acceptable limits.\n* Code 3 [Unknown Record]: The entered start parameter is beyond the total number of records available.\n* Code 4 [Unmapped]: Client ID that is entered is not mapped on the custom DB tables.\n* Code 5 [Server Error]: The system has encountered an unexpected error while processing the request.\n* Code 6 [ConID Error]: The requested supplier ID is unknown under the current API key.\n* Code 7 [Null Data]: No audit or flag data available.\n* Code 8 [Invalid Format]: Provided date and time does not conform to the `yyyy-MM-dd HH:mm:ss` or `yyyy-MM-dd` formats.\n* Code 9 [Unknown file type]: Internal Server Error.\n",
+    "title": "Client API Service",
+    "version": ""
+  },
+  "host": "api.avetta.com",
+  "basePath": "/client-api",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/v1/accounts/{account_id}/users": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "The unique identifier for an account",
+            "in": "path",
+            "name": "account_id",
+            "required": true,
+            "type": "number",
+            "x-example": "17800"
+          },
+          {
+            "description": "The apikey for the client",
+            "in": "query",
+            "name": "apikey",
+            "required": true,
+            "type": "string",
+            "x-example": "aujc990kjbba"
+          },
+          {
+            "default": 1,
+            "description": "The record to start with for pagination (1-based, not 0-based)",
+            "in": "query",
+            "name": "start",
+            "required": false,
+            "type": "number",
+            "x-example": "1"
+          },
+          {
+            "default": 500,
+            "description": "The total number of records to return, maximum of 3000",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "number",
+            "x-example": "1000"
+          },
+          {
+            "description": "Optional value to return records after the specified date and time",
+            "in": "query",
+            "name": "modifiedAfter",
+            "required": false,
+            "type": "string",
+            "x-example": "2016-07-23 05:10:57"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": [
+                {
+                  "account_id": 89001,
+                  "created_date": "2016-07-23 05:10:57",
+                  "email": "testuser@test.com",
+                  "first_name": "Bob",
+                  "id": 1238,
+                  "last_name": "Smith",
+                  "roles": [
+                    {
+                      "id": 123,
+                      "name": "Admin Group"
+                    }
+                  ],
+                  "status": "Active",
+                  "title": "Plumber",
+                  "updated_date": "2016-09-23 10:11:31",
+                  "username": "testuser"
+                }
+              ]
+            },
+            "headers": {},
+            "schema": {
+              "items": {},
+              "type": "array"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "examples": {
+              "application/json": {
+                "code": "3",
+                "message": "Broad Error message"
+              }
+            },
+            "headers": {},
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "examples": {
+              "application/json": {
+                "code": "3",
+                "message": "Broad Error message"
+              }
+            },
+            "headers": {},
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "tags": [
+          "User"
+        ],
+        "description": "List of `User` data.",
+        "summary": "Get Users",
+        "x-private": true
+      }
+    },
+    "/v1/accounts/{account_id}/users/count": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "The unique identifier for an account",
+            "in": "path",
+            "name": "account_id",
+            "required": true,
+            "type": "number",
+            "x-example": "17800"
+          },
+          {
+            "description": "The apikey for the client",
+            "in": "query",
+            "name": "apikey",
+            "required": true,
+            "type": "string",
+            "x-example": "aujc990kjbba"
+          },
+          {
+            "description": "Optional value to return amount of modified records since the specified date and time",
+            "in": "query",
+            "name": "modifiedAfter",
+            "required": false,
+            "type": "string",
+            "x-example": "2016-07-23 05:10:57"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": [
+                {
+                  "total_records": 1845
+                }
+              ]
+            },
+            "headers": {},
+            "schema": {
+              "items": {},
+              "type": "array"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "examples": {
+              "application/json": {
+                "code": "3",
+                "message": "Broad Error message"
+              }
+            },
+            "headers": {},
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "examples": {
+              "application/json": {
+                "code": "3",
+                "message": "Broad Error message"
+              }
+            },
+            "headers": {},
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "tags": [
+          "User"
+        ],
+        "description": "",
+        "summary": "Get User Count",
+        "x-private": true
+      }
+    },
+    "/v1/audits": {
+      "get": {
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "description": "The apikey for the client",
+            "in": "query",
+            "name": "apikey",
+            "required": true,
+            "type": "string",
+            "x-example": "aujc990kjbba"
+          },
+          {
+            "default": 1,
+            "description": "The record to start with for pagination (1-based, not 0-based)",
+            "in": "query",
+            "name": "start",
+            "required": false,
+            "type": "number",
+            "x-example": "1"
+          },
+          {
+            "default": 500,
+            "description": "The total number of records to return, maximum of 3000",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "number",
+            "x-example": "1000"
+          },
+          {
+            "description": "The supplier ID to filter results by",
+            "in": "query",
+            "name": "id",
+            "required": false,
+            "type": "number",
+            "x-example": "117463"
+          },
+          {
+            "description": "Optional value to return records after the specified date and time",
+            "in": "query",
+            "name": "modifiedAfter",
+            "required": false,
+            "type": "string",
+            "x-example": "2016-07-23 05:10:57"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json; charset=utf-8": [
+                {
+                  "contractor_id": 78910,
+                  "contractor_name": "ABC Painting",
+                  "audit_type_id": 1,
+                  "audit_type_name": "PQF",
+                  "audit_score": 0,
+                  "audit_year": "2018",
+                  "audit_period": "2018-01-01 - 2019-04-01",
+                  "category_id": 78,
+                  "category_name": "Contractor Information",
+                  "title": "",
+                  "question_id": 23,
+                  "question": "What is the name of your company?",
+                  "answer": "ABC Painting",
+                  "updated_date": "2016-07-23 05:10:57",
+                  "href": "https://api.avetta.com/client-api/v1/files/123?questionId=890"
+                }
+              ]
+            },
+            "headers": {},
+            "schema": {
+              "items": {},
+              "type": "array"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "examples": {
+              "application/json; charset=utf-8": {
+                "code": "3",
+                "message": "Broad Error message"
+              }
+            },
+            "headers": {},
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "examples": {
+              "application/json; charset=utf-8": {
+                "code": "3",
+                "message": "Broad Error message"
+              }
+            },
+            "headers": {},
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "tags": [
+          "Audit Endpoint"
+        ],
+        "description": "Retrieves a set of `Audit` data based on the client making the request and the pagination parameters. The `href` field will only return for `Audit` data that are file related. Only active suppliers that have approved connections to clients will be returned in this endpoint.",
+        "summary": "Get Audit Data",
+        "x-internal": true
+      }
+    },
+    "/v1/audits/count": {
+      "get": {
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "description": "The apikey for the client",
+            "in": "query",
+            "name": "apikey",
+            "required": true,
+            "type": "string",
+            "x-example": "aujc990kjbba"
+          },
+          {
+            "description": "Contractor ID to determine total records per contractor",
+            "in": "query",
+            "name": "id",
+            "required": false,
+            "type": "number",
+            "x-example": "118577"
+          },
+          {
+            "description": "Optional value to return amount of modified records since the specified date and time",
+            "in": "query",
+            "name": "modifiedAfter",
+            "required": false,
+            "type": "string",
+            "x-example": "2016-07-23 05:10:57"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json; charset=utf-8": [
+                {
+                  "total_records": 1845
+                }
+              ]
+            },
+            "headers": {},
+            "schema": {
+              "items": {},
+              "type": "array"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "examples": {
+              "application/json; charset=utf-8": {
+                "code": "3",
+                "message": "Broad Error message"
+              }
+            },
+            "headers": {},
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "examples": {
+              "application/json; charset=utf-8": {
+                "code": "3",
+                "message": "Broad Error message"
+              }
+            },
+            "headers": {},
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "tags": [
+          "Audit Endpoint"
+        ],
+        "description": "",
+        "summary": "Get Audit Count",
+        "x-internal": true
+      }
+    },
+    "/v1/files/{id}": {
+      "get": {
+        "produces": [
+          "application/pdf",
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "description": "The ID of the file",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "number",
+            "x-example": "44282"
+          },
+          {
+            "description": "",
+            "in": "query",
+            "name": "questionId",
+            "required": true,
+            "type": "number",
+            "x-example": "66522"
+          },
+          {
+            "description": "The apikey for the client",
+            "in": "query",
+            "name": "apikey",
+            "required": true,
+            "type": "string",
+            "x-example": "bz6cfchkdgzxj65obla5gcw3gcslr2rl"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/pdf": ""
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "examples": {
+              "application/json; charset=utf-8": {
+                "code": "3",
+                "message": "Broad Error message"
+              }
+            },
+            "headers": {},
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "examples": {
+              "application/json; charset=utf-8": {
+                "code": "3",
+                "message": "Broad Error message"
+              }
+            },
+            "headers": {},
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "examples": {
+              "application/json; charset=utf-8": {
+                "code": "3",
+                "message": "Broad Error message"
+              }
+            },
+            "headers": {},
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "tags": [
+          "File Endpoint"
+        ],
+        "description": "Return the binary file. The response content type header is set to be a PDF as an example, but other file types can be returned such as text, or doc/docx.\nThe URL for this endpoint is returned by the `href` field from the `Audit Data` endpoint. That `href` field will require an additional `&apikey=INSERT_API_KEY_HERE` to be appended to the end of the URL for a valid file call to be made.",
+        "summary": "Get File"
+      }
+    },
+    "/v1/hierarchies": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "The apikey for the client",
+            "in": "query",
+            "name": "apikey",
+            "required": true,
+            "type": "string",
+            "x-example": "aujc990kjbba"
+          },
+          {
+            "default": 1,
+            "description": "The record to start with for pagination (1-based, not 0-based)",
+            "in": "query",
+            "name": "start",
+            "required": false,
+            "type": "number",
+            "x-example": "1"
+          },
+          {
+            "default": 500,
+            "description": "The total number of records to return, maximum of 3000",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "number",
+            "x-example": "1000"
+          },
+          {
+            "description": "Optional value to return records after the specified date and time",
+            "in": "query",
+            "name": "modifiedAfter",
+            "required": false,
+            "type": "string",
+            "x-example": "2016-07-23 05:10:57"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": [
+                {
+                  "account_id": 91989,
+                  "created_date": "2016-07-23 05:10:57",
+                  "name": "Oil Corporation",
+                  "parent_account_id": 10190,
+                  "status": "Active",
+                  "subscriptions": [
+                    {
+                      "id": 18,
+                      "name": "EmployeeGUARD"
+                    }
+                  ],
+                  "top_account_id": 89011,
+                  "type": "Corporate",
+                  "updated_date": "2016-09-23 10:11:31"
+                }
+              ]
+            },
+            "headers": {},
+            "schema": {
+              "items": {},
+              "type": "array"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "examples": {
+              "application/json": {
+                "code": "3",
+                "message": "Broad Error message"
+              }
+            },
+            "headers": {},
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "examples": {
+              "application/json": {
+                "code": "3",
+                "message": "Broad Error message"
+              }
+            },
+            "headers": {},
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "tags": [
+          "Hierarchy"
+        ],
+        "description": "List of hierarchy data. Top-level, corporate accounts with have a `parent_id` of null.",
+        "summary": "Get Hierarchies",
+        "x-private": true
+      }
+    },
+    "/v1/hierarchies/count": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "The apikey for the client",
+            "in": "query",
+            "name": "apikey",
+            "required": true,
+            "type": "string",
+            "x-example": "aujc990kjbba"
+          },
+          {
+            "description": "Optional value to return amount of modified records since the specified date and time",
+            "in": "query",
+            "name": "modifiedAfter",
+            "required": false,
+            "type": "string",
+            "x-example": "2016-07-23 05:10:57"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": [
+                {
+                  "total_records": 1845
+                }
+              ]
+            },
+            "headers": {},
+            "schema": {
+              "items": {},
+              "type": "array"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "examples": {
+              "application/json": {
+                "code": "3",
+                "message": "Broad Error message"
+              }
+            },
+            "headers": {},
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "examples": {
+              "application/json": {
+                "code": "3",
+                "message": "Broad Error message"
+              }
+            },
+            "headers": {},
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "tags": [
+          "Hierarchy"
+        ],
+        "description": "",
+        "summary": "Get Hierarchy Count",
+        "x-private": true
+      }
+    },
+    "/v1/insurance": {
+      "get": {
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "description": "The numeric identifier for a supplier",
+            "in": "query",
+            "name": "id",
+            "required": false,
+            "type": "number",
+            "x-example": "44282"
+          },
+          {
+            "description": "The apikey for the client",
+            "in": "query",
+            "name": "apikey",
+            "required": true,
+            "type": "string",
+            "x-example": "aujc990kjbba"
+          },
+          {
+            "default": 1,
+            "description": "The record to start with for pagination (1-based, not 0-based)",
+            "in": "query",
+            "name": "start",
+            "required": false,
+            "type": "number",
+            "x-example": "1"
+          },
+          {
+            "default": 500,
+            "description": "The total number of records to return, maximum of 3000",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "number",
+            "x-example": "1000"
+          },
+          {
+            "description": "Optional value to return records after the specified date and time",
+            "in": "query",
+            "name": "modifiedAfter",
+            "required": false,
+            "type": "string",
+            "x-example": "2016-07-23 05:10:57"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json; charset=utf-8": [
+                {
+                  "clients": [
+                    {
+                      "client_id": 8372,
+                      "client_name": "Oil Rig",
+                      "insurance_data": [
+                        {
+                          "audit_id": 7365,
+                          "insurance_type_detail": [
+                            {
+                              "category_id": 628,
+                              "category_name": "General Information",
+                              "values": [
+                                {
+                                  "answer": "123 Luke St",
+                                  "href": "/client-api/v1/files/2839?questionId=395",
+                                  "question": "What is your Address?",
+                                  "question_id": 395,
+                                  "title": "Some Title",
+                                  "updated_date": "2016-09-23 10:11:31"
+                                }
+                              ]
+                            }
+                          ],
+                          "insurance_type_id": 34,
+                          "insurance_type_name": "General Policy"
+                        }
+                      ]
+                    }
+                  ],
+                  "contractor_id": 2938,
+                  "contractor_name": "ABC Painting"
+                }
+              ]
+            },
+            "headers": {},
+            "schema": {
+              "items": {},
+              "type": "array"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "examples": {
+              "application/json; charset=utf-8": {
+                "code": "3",
+                "message": "Broad Error message"
+              }
+            },
+            "headers": {},
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "examples": {
+              "application/json; charset=utf-8": {
+                "code": "3",
+                "message": "Broad Error message"
+              }
+            },
+            "headers": {},
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "tags": [
+          "Insurance"
+        ],
+        "description": "Retrieves a set of `Insurance` data based on the provided apiKey and pagination parameters. If an `id` is provided, only the insurance data pertaining to that supplier will be returned. Only active suppliers that have approved connections to clients will be returned in this endpoint.",
+        "summary": "Get Insurance Data",
+        "x-private": true,
+        "x-internal": true
+      }
+    },
+    "/v2/suppliers": {
+      "get": {
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "description": "The apikey for the client",
+            "in": "query",
+            "name": "apikey",
+            "required": true,
+            "type": "string",
+            "x-example": "aujc990kjbba"
+          },
+          {
+            "default": 1,
+            "description": "The record to start with for pagination (1-based, not 0-based)",
+            "in": "query",
+            "name": "start",
+            "required": false,
+            "type": "number",
+            "x-example": "1"
+          },
+          {
+            "default": 500,
+            "description": "The total number of records to return, maximum of 3000",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "number",
+            "x-example": "1000"
+          },
+          {
+            "description": "Optional value to provide which will restrict records to only return those with an updatedDate after the modified after date. Any value under the supplier which changes includes tags, flags, reasons that was modified will trigger the updated date.",
+            "in": "query",
+            "name": "modifiedAfter",
+            "required": false,
+            "type": "string",
+            "x-example": "2016-07-23 05:10:57"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json; charset=utf-8": [
+                {
+                  "id": 89010,
+                  "name": "Bob's Plumbing Services",
+                  "dba_name": "Bob's Plumbing Services, LLC",
+                  "company_url": "www.bobsplumbing.com",
+                  "description": "Providing plumbing services",
+                  "primary_contact": {
+                    "email": "bob.smith@fakeemail.com",
+                    "fax": "555 555 4567",
+                    "first_name": "Bob",
+                    "last_name": "Smith",
+                    "phone": "555 555 1234"
+                  },
+                  "address": {
+                    "address_line1": "123 Main St",
+                    "address_line2": "Suite 100",
+                    "city": "Irvine",
+                    "country": "United States",
+                    "country_subdivision": "California",
+                    "postal_code": "92614"
+                  },
+                  "billing_address": {
+                    "address_line1": "123 Main St",
+                    "city": "Irvine",
+                    "country": "United States",
+                    "country_subdivision": "California",
+                    "postal_code": "92614"
+                  },
+                  "account_status": "Active",
+                  "updated_date": "2016-07-23 05:10:57",
+                  "external_id": [
+                    {
+                      "client_id": 123,
+                      "type": "Other",
+                      "value": "234489"
+                    }
+                  ],
+                  "supplier_tags": [
+                    {
+                      "tags": [
+                        {
+                          "id": 223,
+                          "name": "Sample Tag"
+                        }
+                      ],
+                      "client_id": 123
+                    }
+                  ],
+                  "flags": [
+                    {
+                      "client_id": 123,
+                      "client_name": "Oil Rig",
+                      "forced_expiration": "06/06/2016",
+                      "is_forced": "True",
+                      "system_flag": "Yellow",
+                      "system_flag_details": [
+                        {
+                          "flag": "Yellow",
+                          "forced_expiration": "06/01/2016",
+                          "is_forced": "True",
+                          "reasons": [
+                            {
+                              "85": "High TRIR, Missing Documentation"
+                            },
+                            {
+                              "42": "General Liability is missing"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "trades": [
+                    {
+                      "frequency": "most",
+                      "service_offerings": [
+                        {
+                          "82": "Welding"
+                        },
+                        {
+                          "193": "Manufacturing"
+                        }
+                      ]
+                    }
+                  ],
+                  "service_types": [
+                    "On-site",
+                    "Off-site"
+                  ]
+                }
+              ]
+            },
+            "headers": {},
+            "schema": {
+              "items": {},
+              "type": "array"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "examples": {
+              "application/json; charset=utf-8": {
+                "code": "3",
+                "message": "Broad Error message"
+              }
+            },
+            "headers": {},
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {},
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "examples": {
+              "application/json; charset=utf-8": {
+                "code": "3",
+                "message": "Broad Error message"
+              }
+            },
+            "headers": {},
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "tags": [
+          "Supplier Endpoint"
+        ],
+        "description": "Retrieves a list of multiple supplier data. Only active suppliers that have BOTH approved connections to clients AND have flags will be returned in this endpoint.\n\n* The `flags` array contains the supplier’s flag for a particular `client_id`. \n* The `client_id` field is the identifier of a specific site within your account hierarchy. \n* The `system_flag` field shows the overall flag color for a particular supplier/contractor for that `client_id`.\n* The `system_flag_details` array contains the detail of your individual flaggable data and its current flag color. This provides specific detailed reasons for the current overall flag color, `system_flag` for in regards to that specific `client_id`.\n\n",
+        "summary": "Get Suppliers"
+      }
+    },
+    "/v2/suppliers/count": {
+      "get": {
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "description": "The apikey for the client",
+            "in": "query",
+            "name": "apikey",
+            "required": true,
+            "type": "string",
+            "x-example": "aujc990kjbba"
+          },
+          {
+            "description": "Optional value to return amount of modified records since the specified date and time",
+            "in": "query",
+            "name": "modifiedAfter",
+            "required": false,
+            "type": "string",
+            "x-example": "2016-07-23 05:10:57"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json; charset=utf-8": [
+                {
+                  "total_records": 1845
+                }
+              ]
+            },
+            "headers": {},
+            "schema": {
+              "items": {},
+              "type": "array"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "examples": {
+              "application/json; charset=utf-8": {
+                "code": "3",
+                "message": "Broad Error message"
+              }
+            },
+            "headers": {},
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "examples": {
+              "application/json; charset=utf-8": {
+                "code": "3",
+                "message": "Broad Error message"
+              }
+            },
+            "headers": {},
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "tags": [
+          "Supplier Endpoint"
+        ],
+        "description": "Retrieves the number of suppliers returned from the `Get Suppliers` endpoint.",
+        "summary": "Get Supplier Count"
+      }
+    },
+    "/v2/suppliers/{id}": {
+      "get": {
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "description": "The numeric identifier for a supplier",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "number",
+            "x-example": "118577"
+          },
+          {
+            "description": "The apikey for the client",
+            "in": "query",
+            "name": "apikey",
+            "required": true,
+            "type": "string",
+            "x-example": "aujc990kjbba"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": [
+                {
+                  "id": 89010,
+                  "name": "Bob's Plumbing Services",
+                  "dba_name": "Bob's Plumbing Services, LLC",
+                  "company_url": "www.bobsplumbing.com",
+                  "description": "Providing plumbing services",
+                  "primary_contact": {
+                    "email": "bob.smith@fakeemail.com",
+                    "fax": "555 555 4567",
+                    "first_name": "Bob",
+                    "last_name": "Smith",
+                    "phone": "555 555 1234"
+                  },
+                  "address": {
+                    "address_line1": "123 Main St",
+                    "address_line2": "Suite 100",
+                    "city": "Irvine",
+                    "country": "United States",
+                    "country_subdivision": "California",
+                    "postal_code": "92614"
+                  },
+                  "billing_address": {
+                    "address_line1": "123 Main St",
+                    "city": "Irvine",
+                    "country": "United States",
+                    "country_subdivision": "California",
+                    "postal_code": "92614"
+                  },
+                  "account_status": "Active",
+                  "updated_date": "2016-07-23 05:10:57",
+                  "external_id": [
+                    {
+                      "client_id": 123,
+                      "type": "Other",
+                      "value": "234489"
+                    }
+                  ],
+                  "supplier_tags": [
+                    {
+                      "tags": [
+                        {
+                          "id": 223,
+                          "name": "Sample Tag"
+                        }
+                      ],
+                      "client_id": 123
+                    }
+                  ],
+                  "flags": [
+                    {
+                      "client_id": 123,
+                      "client_name": "Oil Rig",
+                      "forced_expiration": "06/06/2016",
+                      "is_forced": "True",
+                      "system_flag": "Yellow",
+                      "system_flag_details": [
+                        {
+                          "flag": "Yellow",
+                          "forced_expiration": "06/01/2016",
+                          "is_forced": "True",
+                          "reasons": [
+                            {
+                              "85": "High TRIR, Missing Documentation"
+                            },
+                            {
+                              "42": "General Liability is missing"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "trades": [
+                    {
+                      "frequency": "most",
+                      "service_offerings": [
+                        {
+                          "82": "Welding"
+                        },
+                        {
+                          "193": "Manufacturing"
+                        }
+                      ]
+                    }
+                  ],
+                  "service_types": [
+                    "On-site",
+                    "Off-site"
+                  ]
+                }
+              ]
+            },
+            "headers": {},
+            "schema": {
+              "items": {},
+              "type": "array"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "examples": {
+              "application/json; charset=utf-8": {
+                "code": "3",
+                "message": "Broad Error message"
+              }
+            },
+            "headers": {},
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "examples": {
+              "application/json; charset=utf-8": {
+                "code": "3",
+                "message": "Broad Error message"
+              }
+            },
+            "headers": {},
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "tags": [
+          "Supplier Endpoint"
+        ],
+        "description": "Retrieves information about the provided supplier ignoring `start`, `limit`, and `modifiedAfter` parameters.",
+        "summary": "Get Supplier Data"
+      }
+    },
+    "/v1/etl/{endpoint}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "",
+            "examples": {
+              "application/json": [
+                {
+                  "etlFinishDate": "2019-12-29 3:00:13"
+                }
+              ]
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "etlFinishDate": {
+                    "type": "string",
+                    "description": "In yyyy-MM-dd HH:mm:ss format"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Retrieves the dateTime value (in UTC) of the last Avetta ETL run for the provided `endpoint`. This dateTime field will differ depending on the provided `endpoint` field. Current valid `endpoint` values are `suppliers` and `audits`.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "endpoint",
+            "type": "string",
+            "required": true,
+            "description": "The desired endpoint to retrieve the ETL finish date for.",
+            "enum": [
+              "suppliers",
+              "audits"
+            ]
+          },
+          {
+            "in": "query",
+            "name": "apikey",
+            "type": "string",
+            "required": true,
+            "description": "The apikey for the client"
+          }
+        ],
+        "summary": "GET ETL Finish Date",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "ETL Endpoint"
+        ],
+        "x-internal": true
+      }
+    },
+    "/v1/flags": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "supplierId": {
+                    "type": "integer"
+                  },
+                  "supplierName": {
+                    "type": "string"
+                  },
+                  "clientId": {
+                    "type": "integer"
+                  },
+                  "clientName": {
+                    "type": "string"
+                  },
+                  "flagId": {
+                    "type": "integer"
+                  },
+                  "flagType": {
+                    "type": "string"
+                  },
+                  "flagName": {
+                    "type": "string"
+                  },
+                  "flagColor": {
+                    "type": "string"
+                  },
+                  "isForced": {
+                    "type": "string"
+                  },
+                  "flagDetails": {
+                    "type": "object",
+                    "properties": {
+                      "formId": {
+                        "type": "integer"
+                      },
+                      "formName": {
+                        "type": "string"
+                      },
+                      "questionId": {
+                        "type": "integer"
+                      },
+                      "forcedBy": {
+                        "type": "string"
+                      },
+                      "varianceReason": {
+                        "type": "string"
+                      },
+                      "varianceExpirationDate": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "flagUpdatedDate": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "application/json": [
+                {
+                  "supplierId": 89010,
+                  "supplierName": "Bob's Plumbing Services",
+                  "clientId": 123,
+                  "clientName": "Oil Rig",
+                  "flagId": 234445,
+                  "flagType": "Form",
+                  "flagName": "General Liability must be approved",
+                  "flagColor": "Green",
+                  "isForced": "No",
+                  "flagDetails": {
+                    "formId": 288372,
+                    "formName": "General Liability",
+                    "questionId": 2223,
+                    "forcedBy": "",
+                    "varianceReason": "",
+                    "varianceExpirationDate": ""
+                  },
+                  "flagUpdatedDate": "2020-01-31 22:41:40"
+                }
+              ]
+            }
+          }
+        },
+        "summary": "Get Flags",
+        "x-private": true,
+        "description": "Retrieves a list of criteria flag data based on the provided apikey. The `flagDetails` object contains information relevant to the type of flag returned. For example, a `flagType` of `account` will have no `formId` or `questionId` values (will default to `\"\"`) since an account level flag does not relate to a specific form/question. Likewise a `flagType` of `question` will have both `formId` and `questionId` populated as a question level flag pertains to a specific question in a specific form.\n\nOnly active suppliers that have with approved connections to clients will be returned in this endpoint. \n\nThis endpoint does not retrieve the overall flag status between a supplier and a client, which will be returned in the \"Connections\" endpoint.",
+        "tags": [
+          "Flag Endpoint"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "apikey",
+            "type": "string",
+            "description": "The apikey for the client",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "start",
+            "type": "number",
+            "description": "The record to start with for pagination (1-based, not 0-based)",
+            "default": "1"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "number",
+            "default": "500",
+            "description": "The total number of records to return, maximum of 3000"
+          },
+          {
+            "in": "query",
+            "name": "modifiedAfter",
+            "type": "string",
+            "description": "Optional value to provide which will restrict records to only return those with an flagUpdatedDate after the modified after date."
+          },
+          {
+            "in": "query",
+            "name": "supplierId",
+            "type": "number",
+            "description": "Optional filter for a supplier"
+          },
+          {
+            "in": "query",
+            "name": "clientId",
+            "type": "number",
+            "description": "Optional filter for a client account"
+          },
+          {
+            "in": "query",
+            "name": "flagId",
+            "type": "number",
+            "description": "Optional filter for a specific flag"
+          },
+          {
+            "in": "query",
+            "name": "flagType",
+            "type": "string",
+            "enum": [
+              "account",
+              "form",
+              "question",
+              "calculation"
+            ],
+            "description": "Optional filter on flag type"
+          },
+          {
+            "in": "query",
+            "name": "flagColor",
+            "type": "string",
+            "enum": [
+              "green",
+              "amber",
+              "red",
+              "gray"
+            ],
+            "description": "Optional filter on flag color"
+          },
+          {
+            "in": "query",
+            "name": "isForced",
+            "type": "string",
+            "enum": [
+              "yes",
+              "no"
+            ],
+            "description": "Optional filter on forced flags"
+          }
+        ]
+      }
+    },
+    "/v1/connections": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "supplierId": {
+                  "type": "integer"
+                },
+                "supplierName": {
+                  "type": "string"
+                },
+                "clientId": {
+                  "type": "integer"
+                },
+                "clientName": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "flagColor": {
+                  "type": "string"
+                },
+                "isForced": {
+                  "type": "string"
+                },
+                "flagDetails": {
+                  "type": "object",
+                  "properties": {
+                    "forcedBy": {
+                      "type": "string"
+                    },
+                    "reason": {
+                      "type": "string"
+                    },
+                    "expirationDate": {
+                      "type": "string"
+                    },
+                    "updatedDate": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "createdDate": {
+                  "type": "string"
+                },
+                "updatedDate": {
+                  "type": "string"
+                }
+              }
+            },
+            "examples": {
+              "application/json": {
+                "supplierId": 89010,
+                "supplierName": "Bob's Plumbing Services",
+                "clientId": 123,
+                "clientName": "Oil Rig",
+                "status": "Active",
+                "flagColor": "Red",
+                "isForced": "No",
+                "flagDetails": {
+                  "forcedBy": "",
+                  "reason": "",
+                  "expirationDate": "",
+                  "updatedDate": ""
+                },
+                "createdDate": "2020-01-31 22:41:40",
+                "updatedDate": "2020-01-31 22:41:40"
+              }
+            }
+          }
+        },
+        "summary": "Get Connections",
+        "description": "Retrieves a list of connections based on the provided apikey. \nThis endpoint retrieves the overall flag status between a supplier and a client.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Connection Endpoint"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "apikey",
+            "type": "string",
+            "description": "The apikey for the client",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "start",
+            "type": "number",
+            "default": "1",
+            "description": "The record to start with for pagination (1-based, not 0-based)",
+            "minimum": 1
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "number",
+            "default": "500",
+            "description": "The total number of records to return, maximum of 3000",
+            "minimum": 1,
+            "maximum": 3000
+          },
+          {
+            "in": "query",
+            "name": "supplierId",
+            "type": "number",
+            "description": "Optional filter for a supplier"
+          },
+          {
+            "in": "query",
+            "name": "clientId",
+            "type": "string",
+            "description": "Optional filter for a client account"
+          },
+          {
+            "in": "query",
+            "name": "flagColor",
+            "type": "string",
+            "description": "Optional filter for a client account",
+            "enum": [
+              "green",
+              "gray",
+              "amber",
+              "red"
+            ]
+          },
+          {
+            "in": "query",
+            "name": "isForced",
+            "type": "string",
+            "description": "Optional filter on forced flags",
+            "enum": [
+              "yes",
+              "no"
+            ]
+          },
+          {
+            "in": "query",
+            "name": "modifiedAfter",
+            "type": "string",
+            "description": "Return records with a connection `updatedDate` after the provided `modifiedAfter` date."
+          },
+          {
+            "in": "query",
+            "name": "flagModifiedAfter",
+            "type": "string",
+            "description": "Return records with a flag `updatedDate` after the provided `flagModifiedAfter` date."
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "type": "string",
+            "description": "Returns records with the specified `status`",
+            "enum": [
+              "active",
+              "disconnected",
+              "inactive",
+              "pending",
+              "rejected"
+            ]
+          }
+        ],
+        "x-private": true
+      }
+    },
+    "/v1/forms": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "supplierId": {
+                  "type": "integer"
+                },
+                "supplierName": {
+                  "type": "string"
+                },
+                "formId": {
+                  "type": "integer"
+                },
+                "formName": {
+                  "type": "string"
+                },
+                "formScore": {
+                  "type": "integer"
+                },
+                "formYear": {
+                  "type": "string"
+                },
+                "formPeriod": {
+                  "type": "string"
+                },
+                "clientSites": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "clientId": {
+                        "type": "integer"
+                      },
+                      "clientName": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "categoryId": {
+                  "type": "integer"
+                },
+                "categoryName": {
+                  "type": "string"
+                },
+                "questionId": {
+                  "type": "integer"
+                },
+                "questionTitle": {
+                  "type": "string"
+                },
+                "question": {
+                  "type": "string"
+                },
+                "answer": {
+                  "type": "string"
+                },
+                "updatedDate": {
+                  "type": "string"
+                }
+              }
+            },
+            "examples": {
+              "application/json": [
+                {
+                  "supplierId": 89010,
+                  "supplierName": "Bob's Plumbing Services",
+                  "formId": 1234,
+                  "formName": "Manual Audit",
+                  "formScore": 0,
+                  "formYear": "2019",
+                  "formPeriod": "2019-01-05 - 2020-01-05",
+                  "clientSites": [
+                    {
+                      "clientId": 123,
+                      "clientName": "Oil Rig"
+                    },
+                    {
+                      "clientId": 456,
+                      "clientName": "Chemical Refinery"
+                    }
+                  ],
+                  "categoryId": 111,
+                  "categoryName": "General Safety",
+                  "questionId": 222,
+                  "questionTitle": "",
+                  "question": "Have your workers been certified?",
+                  "answer": "Yes",
+                  "updatedDate": "2019-01-08 12:54:22"
+                }
+              ]
+            }
+          }
+        },
+        "summary": "Get Form Data",
+        "description": "Updated version of the `Audit` endpoint which uses updated nomenclature and includes the applicable client sites a particular form is valid for.\n\nRetrieves a set of `Form` data based on the provided request/pagination parameters. \nThe `href` field in the schema below will only return for `Form` data where the question requires a file upload as an answer. \nOnly active suppliers that have approved connections to clients will be returned in this endpoint.",
+        "tags": [
+          "Form Endpoint"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "x-private": true,
+        "parameters": [
+          {
+            "in": "query",
+            "name": "apikey",
+            "type": "string",
+            "description": "The apikey for the client",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "start",
+            "type": "number",
+            "default": "1",
+            "description": "The record to start with for pagination (1-based, not 0-based)",
+            "minimum": 1
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "number",
+            "default": "500",
+            "description": "The total number of records to return, maximum of 3000",
+            "minimum": 1,
+            "maximum": 3000
+          },
+          {
+            "in": "query",
+            "name": "supplierId",
+            "type": "string",
+            "description": "Optional filter for a supplier"
+          },
+          {
+            "in": "query",
+            "name": "clientId",
+            "type": "string",
+            "description": "Optional filter for a client account"
+          },
+          {
+            "in": "query",
+            "name": "formId",
+            "type": "string",
+            "description": "Optional filter for a specific form"
+          },
+          {
+            "in": "query",
+            "name": "year",
+            "type": "string",
+            "description": "Optional filter for a form year",
+            "enum": [
+              "2019+"
+            ]
+          },
+          {
+            "in": "query",
+            "name": "categoryId",
+            "type": "string",
+            "description": "Optional filter for a category"
+          },
+          {
+            "in": "query",
+            "name": "questionId",
+            "type": "string",
+            "description": "Optional filter for a question"
+          },
+          {
+            "in": "query",
+            "name": "modifiedAfter",
+            "type": "string",
+            "description": "Optional value to return records after the specified date and time"
+          }
+        ]
+      }
+    },
+    "/v1/forms/count": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            },
+            "examples": {
+              "application/json": [
+                {
+                  "total_records": 1845
+                }
+              ]
+            }
+          }
+        },
+        "summary": "Get Form Count",
+        "tags": [
+          "Form Endpoint"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "x-private": true,
+        "description": "Returns the total number of records from the `Form` Endpoint. All query parameters from the `Form` endpoint are also applicable in this endpoint as those values will be used in determining the number of records given the provided parameters."
+      }
+    }
+  },
+  "definitions": {
+    "Address": {
+      "properties": {
+        "address_line1": {
+          "description": "[ max length: 104 ]",
+          "type": "string"
+        },
+        "address_line2": {
+          "description": "[ max length: 52 ]",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Address Base": {
+      "properties": {
+        "city": {
+          "description": "[ max length: 66 ]",
+          "type": "string"
+        },
+        "country": {
+          "description": "[ max length: 33 ]",
+          "type": "string"
+        },
+        "country_subdivision": {
+          "description": "[ max length: 6 ]",
+          "type": "string"
+        },
+        "postal_code": {
+          "description": "[ max length: 16 ]",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Audit": {
+      "properties": {
+        "answer": {
+          "description": "[ max length: 65,535 ]",
+          "type": "string"
+        },
+        "audit_type_id": {
+          "description": "[ max length: 4 ]",
+          "type": "number"
+        },
+        "audit_type_name": {
+          "description": "[ max length: 86 ]",
+          "type": "string"
+        },
+        "category_id": {
+          "description": "[ max length: 5 ]",
+          "type": "number"
+        },
+        "category_name": {
+          "description": "[ max length: 118 ]",
+          "type": "string"
+        },
+        "contractor_id": {
+          "description": "[ max length: 6 ]",
+          "type": "number"
+        },
+        "contractor_name": {
+          "description": "[ max length: 78 ]",
+          "type": "string"
+        },
+        "href": {
+          "description": "[ max length: 335 ]",
+          "type": "string"
+        },
+        "question": {
+          "description": "[ max length: 5,048 ]",
+          "type": "string"
+        },
+        "question_id": {
+          "description": "[ max length: 5 ]",
+          "type": "number"
+        },
+        "title": {
+          "description": "[ max length: 655 ]",
+          "type": "string"
+        },
+        "updated_date": {
+          "description": "[ max length: 19 ]",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Audit Data": {},
+    "Audit Data Count": {},
+    "Billing Address": {
+      "properties": {
+        "address_line1": {
+          "description": "[ max length: 53 ]",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Client Tag": {
+      "properties": {
+        "id": {
+          "description": "[ max length: 4 ]",
+          "type": "number"
+        },
+        "name": {
+          "description": "[ max length: 53 ]",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ClientsInsurance": {
+      "properties": {
+        "client_id": {
+          "description": "[ max length: 6 ]",
+          "type": "number"
+        },
+        "client_name": {
+          "description": "[ max length: 78 ]",
+          "type": "string"
+        },
+        "insurance_data": {
+          "items": {},
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "Error Response": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "ExternalId": {
+      "properties": {
+        "client_id": {
+          "description": "[ max length: 6 ]",
+          "type": "number"
+        },
+        "type": {
+          "description": "[ max length: 7 ]",
+          "type": "string"
+        },
+        "value": {
+          "description": "[ max length: 50 ]",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "File": {},
+    "Flag": {
+      "properties": {
+        "client_id": {
+          "description": "[ max length: 6 ]",
+          "type": "number"
+        },
+        "client_name": {
+          "description": "[ max length: 78 ]",
+          "type": "string"
+        },
+        "forced_expiration": {
+          "description": "[ max length: 10 ]",
+          "type": "string"
+        },
+        "is_forced": {
+          "description": "[ max length: 5 ]",
+          "type": "string"
+        },
+        "system_flag": {
+          "description": "[ max length: 5 ]",
+          "type": "string"
+        },
+        "system_flag_details": {
+          "items": {},
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "Hierarchy": {
+      "properties": {
+        "account_id": {
+          "type": "number"
+        },
+        "created_date": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "parent_account_id": {
+          "type": "number"
+        },
+        "status": {
+          "type": "string"
+        },
+        "subscriptions": {
+          "items": {},
+          "type": "array"
+        },
+        "top_account_id": {
+          "type": "number"
+        },
+        "type": {
+          "type": "string"
+        },
+        "updated_date": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Hierarchy Count": {},
+    "Hierarchy List": {},
+    "Insurance": {
+      "properties": {
+        "clients": {
+          "items": {},
+          "type": "array"
+        },
+        "contractor_id": {
+          "description": "[ max length: 6 ]",
+          "type": "number"
+        },
+        "contractor_name": {
+          "description": "[ max length: 78 ]",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Insurance Data": {},
+    "InsuranceData": {
+      "properties": {
+        "audit_id": {
+          "description": "[ max length: 7 ]",
+          "type": "number"
+        },
+        "insurance_type_detail": {
+          "items": {},
+          "type": "array"
+        },
+        "insurance_type_id": {
+          "description": "[ max length: 4 ]",
+          "type": "number"
+        },
+        "insurance_type_name": {
+          "description": "[ max length: 86 ]",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "InsuranceDetails": {
+      "properties": {
+        "category_id": {
+          "description": "[ max length: 5 ]",
+          "type": "number"
+        },
+        "category_name": {
+          "description": "[ max length: 118 ]",
+          "type": "string"
+        },
+        "values": {
+          "items": {},
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "InsuranceValues": {
+      "properties": {
+        "answer": {
+          "description": "[ max length: 65,535 ]",
+          "type": "string"
+        },
+        "href": {
+          "description": "[ max length: 335 ]",
+          "type": "string"
+        },
+        "question": {
+          "description": "[ max length: 5,048]",
+          "type": "string"
+        },
+        "question_id": {
+          "description": "[ max length: 5 ]",
+          "type": "number"
+        },
+        "title": {
+          "description": "[ max length: 655 ]",
+          "type": "string"
+        },
+        "updated_date": {
+          "description": "[ max length: 19 ]",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Reasons1": {
+      "properties": {
+        "85": {
+          "description": "[ max length: 281 ]",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Reasons2": {
+      "properties": {
+        "42": {
+          "description": "[ max length: 281 ]",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Record Count": {
+      "properties": {
+        "total_records": {
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "Role": {
+      "properties": {
+        "id": {
+          "type": "number"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Subscription": {
+      "properties": {
+        "id": {
+          "type": "number"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Supplier": {
+      "properties": {
+        "account_status": {
+          "description": "[ max length: 11 ]",
+          "type": "string"
+        },
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "billing_address": {
+          "$ref": "#/definitions/Billing Address"
+        },
+        "company_url": {
+          "description": "[ max length: 52 ]",
+          "type": "string"
+        },
+        "dba_name": {
+          "description": "[ max length: 400 ]",
+          "type": "string"
+        },
+        "description": {
+          "description": "[ max length: 24,935 ]",
+          "type": "string"
+        },
+        "external_id": {
+          "items": {},
+          "type": "array"
+        },
+        "flags": {
+          "items": {},
+          "type": "array"
+        },
+        "id": {
+          "description": "[ max length: 6 ]",
+          "type": "number"
+        },
+        "name": {
+          "description": "[ max length: 78 ]",
+          "type": "string"
+        },
+        "primary_contact": {
+          "properties": {
+            "email": {
+              "description": "[ max length: 33 ]",
+              "type": "string"
+            },
+            "fax": {
+              "description": "[ max length: 14 ]",
+              "type": "string"
+            },
+            "first_name": {
+              "description": "[ max length: 50 ]",
+              "type": "string"
+            },
+            "last_name": {
+              "description": "[ max length: 43 ]",
+              "type": "string"
+            },
+            "phone": {
+              "description": "[ max length: 50 ]",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "service_types": {
+          "description": "[ max length: 23 ]",
+          "items": {},
+          "type": "array"
+        },
+        "supplier_tags": {
+          "items": {},
+          "type": "array"
+        },
+        "trades": {
+          "items": {},
+          "type": "array"
+        },
+        "updated_date": {
+          "description": "[ max length: 19 ]",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Supplier Count": {},
+    "Supplier Data": {},
+    "Supplier List": {},
+    "Tags": {
+      "properties": {
+        "tags": {
+          "items": {},
+          "type": "array"
+        },
+        "client_id": {
+          "description": "[ max length: 6 ]",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "TradeOfferings1": {
+      "properties": {
+        "82": {
+          "description": "[ max length: 179 ]",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TradeOfferings2": {
+      "properties": {
+        "193": {
+          "description": "[ max length: 179 ]",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Trades": {
+      "properties": {
+        "frequency": {
+          "description": "[ max length: 6 ]",
+          "type": "string"
+        },
+        "service_offerings": {
+          "items": {},
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "User": {
+      "properties": {
+        "account_id": {
+          "type": "number"
+        },
+        "created_date": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "number"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "roles": {
+          "items": {},
+          "type": "array"
+        },
+        "status": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "updated_date": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "User Count": {},
+    "User List": {}
+  },
+  "securityDefinitions": {},
+  "tags": [
+    {
+      "name": "Supplier Endpoint"
+    },
+    {
+      "name": "Audit Endpoint"
+    },
+    {
+      "name": "File Endpoint"
+    },
+    {
+      "name": "User"
+    },
+    {
+      "name": "Hierarchy"
+    },
+    {
+      "name": "Insurance"
+    },
+    {
+      "description": "Our errors are listed below in the following format -> Code Error Number [Actual Message]: Description of the error.\n\nCode 1 [Validation Failed]: An invalid API key was provided.\n\nCode 2 [Invalid Parameters]: The start and/or limit parameters entered are not within acceptable limits.\n\nCode 3 [Unknown Record]: The entered start parameter is beyond the total number of records available.\n\nCode 4 [Unmapped]: Client ID that is entered is not mapped on the custom DB tables.\n\nCode 5 [Server Error]: The system has encountered an unexpected error while processing the request.\n\nCode 6 [ConID Error]: The requested supplier ID is unknown under the current API key.\n\nCode 7 [Null Data]: No audit or flag data available.\n\nCode 8 [Invalid Format]: Provided date and time does not conform to the `yyyy-MM-dd HH:mm:ss` or `yyyy-MM-dd` formats\n\nCode 9 [Unknown file type]: Internal Server Error",
+      "name": "Error Handling"
+    },
+    {
+      "name": "ETL Endpoint"
+    },
+    {
+      "name": "Flag Endpoint"
+    },
+    {
+      "name": "Connection Endpoint"
+    },
+    {
+      "name": "Form Endpoint"
+    }
+  ]
+}

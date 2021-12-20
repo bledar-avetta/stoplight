@@ -1,0 +1,1807 @@
+swagger: '2.0'
+info:
+  description: >
+    The Avetta API is a mechanism to allow our customers to retrieve Employee
+    and Role data from Worker Management via application programming interface.
+    The Avetta API is organized around REST and uses HTTP status codes and error
+    payload responses to indicate API errors.
+
+
+    We leverage the HTTP protocol features, like HTTP verbs and status codes,
+    which are commonly used and are understood by off-the-shelf HTTP clients.
+    All API responses (including errors) will be returned in JSON format.
+
+
+    **Host Region**
+
+
+    In some cases we support regional instances.  The default region value is
+    simply 'worker'.  Making the host value evaulate to
+    https://worker.avetta.com. If told to use a regional url other than the
+    default is used append the region identifier after worker.  eg.
+    https://worker-au.avetta.com
+
+
+    **Versioning <- IMPORTANT UPDATE MUST READ ->**
+
+
+    You will notice in this documentation that the URL for this API is as
+    follows: https://worker.avetta.com/api/vX… This URL contains vX to specify
+    the particular version to be used when making the desired call. Different
+    versions of the same endpoint may return different results, therefore it is
+    important to note the versions of each endpoint in this documentation.
+    Please be aware of this as you check each endpoint.
+
+
+    **Authentication**
+
+
+    When using the API, include your secret API key in the request for the
+    service to authenticate your account. This API Key will be provided to you
+    by your point of contact in Avetta.
+
+    All API requests must be made over HTTPS. Calls to the service over HTTP
+    will result in a 302 Redirect response to the HTTPS end-point. API requests
+    without an apikey will fail.
+
+
+    **Errors**
+
+
+    Avetta uses conventional HTTP response codes to indicate the success or
+    failure of an API request. In general, codes in the 2xx range indicate
+    success, codes in the 4xx range indicate an error that failed given the
+    information provided (e.g., a required parameter was omitted, an invalid
+    account number, validation failure, etc.), and in rare situations, codes in
+    the 5xx range indicate a server error.
+
+
+    **Pagination**
+
+
+    Avetta has a default maximum limit of 3000 results in one API call. In the
+    case where the response returns more than the default limit, you must
+    utilize pagination to retrieve the full data set. Avetta utilizes
+    cursor-based pagination via optional start and limit query string
+    parameters. The start indicates the record to start with for pagination and
+    the limit indicates the total number of records to return (maximum of 3000).
+  title: Worker Management API
+  version: ''
+host: '{region}.avetta.com'
+basePath: /api/
+schemes:
+  - https
+paths:
+  '/{version}/accounts/{id}':
+    get:
+      produces:
+        - application/json
+      parameters:
+        - description: version
+          in: path
+          name: version
+          required: true
+          type: string
+          x-example: v1
+        - description: user id
+          in: path
+          name: id
+          required: false
+          type: integer
+        - description: provided consumer key
+          in: query
+          name: apikey
+          required: true
+          type: string
+          x-example: 13b73edae8443990be1aa8f1a483bc27
+        - default: 1
+          description: offset of records to return
+          in: query
+          name: start
+          required: false
+          type: number
+        - default: 3000
+          description: maximum records to return
+          in: query
+          name: limit
+          required: false
+          type: number
+        - description: additonal items to return
+          enum:
+            - users
+            - connections
+            - admins
+          in: query
+          name: extra
+          required: false
+          type: string
+        - in: query
+          name: search
+          type: string
+          description: search for account con_id and name
+      responses:
+        '200':
+          description: OK
+          examples:
+            application/json:
+              stats:
+                apikey: sunt in
+                command: tempor sit deserunt
+                count: 39855640.68739152
+                limit: 96575881.34493399
+                msg: qui
+                records: -76908798.75658303
+                start: -79471934.52712944
+                time: 23269489.55769579
+                version: nulla eiusmod culpa laboris
+              accounts:
+                - id: -23603275.13668646
+                  con_id: -34091952.7689918
+                  name: in et Ut anim
+                  con_flag: Amber
+                  status: Active
+                  type: Supplier
+                  external_id: aliqua laboris sit ad
+                  connections:
+                    - id: 65438168.12375006
+                      con_id: -81287503.43933983
+                      name: id aute Lorem anim
+                      con_flag: Green
+                      status: Active
+                      external_id:
+                        - type: exercitation consequat
+                          value: velit
+                    - id: 29005950.821809053
+                      con_id: 55786419.31446454
+                      name: consequat in
+                      con_flag: Amber
+                      status: Active
+                      external_id:
+                        - type: ipsum Ut
+                          value: tempor sint Lorem in anim
+                        - type: exercitation Ut eu ut incididunt
+                          value: mollit est et voluptate ea
+                        - type: cupidatat fugiat nostrud Lorem
+                          value: cupidatat sed
+                        - type: aliquip
+                          value: commodo pariatur
+                    - id: -27375648.712570027
+                      con_id: 5719417.606516376
+                      name: nostrud dolor
+                      con_flag: Amber
+                      status: Inactive
+                      external_id:
+                        - type: ullamco sunt amet
+                          value: sit non
+                    - id: -91077969.32133168
+                      con_id: 86974958.35804173
+                      name: in
+                      con_flag: Amber
+                      status: Inactive
+                      external_id: dolor velit reprehenderit proident
+                    - id: 38652478.56186378
+                      con_id: 78897539.10462806
+                      name: laboris
+                      con_flag: Green
+                      status: Active
+                      external_id:
+                        - type: incididunt sunt magna aliqua
+                          value: proident
+                  admins:
+                    - id: 35058485.64282167
+                      con_id: 40763992.063218
+                      login_id: ut
+                      email: rep
+                      first_name: 'enim '
+                      last_name: voluptate sed esse sint
+                      phone: consectetur aliqua
+                      status: Inactive
+                      title: laboris
+                      permissions:
+                        - id: -15093348.48445101
+                          name: eiusmod
+                        - id: -38011069.133907236
+                          name: exercitation elit enim est
+                        - id: -77143382.01954556
+                          name: nostrud
+                        - id: -73249954.8216842
+                          name: commodo anim et
+                  users:
+                    - con_id: -46533382.6527083
+                      email: cupidatat pariatur reprehenderit
+                      first_name: irure enim nisi dolore adipisicing
+                      flag: Red
+                      flag_forced: true
+                      id: -22215785.607953638
+                      last_name: laboris tempor et
+                      login_id: velit elit dolore Lorem
+                      phone: voluptate velit in
+                      status: Active
+                      title: anim in nulla amet
+                    - con_id: -69166953.5015298
+                      email: qui Excepteur
+                      first_name: ut
+                      flag: Red
+                      flag_forced: true
+                      id: -37617408.028441936
+                      last_name: aute mollit
+                      login_id: non sunt nisi amet ex
+                      phone: amet ipsum
+                      status: Inactive
+                      title: ipsum
+                    - con_id: 26516385.430740908
+                      email: voluptate ad in dolore reprehenderit
+                      first_name: nulla
+                      flag: Amber
+                      flag_forced: true
+                      id: -19862058.866232604
+                      last_name: veniam culpa
+                      login_id: est
+                      phone: Duis
+                      status: Inactive
+                      title: ex cillum magna Duis
+                    - con_id: -60076606.87850565
+                      email: sed culpa fugiat
+                      first_name: sed consectetur proident pariatur dolore
+                      flag: Green
+                      flag_forced: false
+                      id: -98972773.3500164
+                      last_name: ea ex est adipisicing exercitation
+                      login_id: pariatur aliqua anim
+                      phone: Lorem esse qui consectetur
+                      status: Inactive
+                      title: veniam nostrud in proident
+          headers: {}
+          schema:
+            type: object
+            properties:
+              stats:
+                $ref: '#/definitions/Stats'
+              accounts:
+                description: Array of accounts
+                type: array
+                items:
+                  $ref: '#/definitions/AccountResponse'
+      tags:
+        - Account Endpoint
+      description: ''
+      summary: Accounts
+  '/{version}/users/{id}':
+    get:
+      produces:
+        - application/json
+      parameters:
+        - description: version
+          in: path
+          name: version
+          required: true
+          type: string
+          x-example: v1
+        - description: user id
+          in: path
+          name: id
+          required: false
+          type: integer
+        - description: provided consumer key
+          in: query
+          name: apikey
+          required: true
+          type: string
+          x-example: 13b73edae8443990be1aa8f1a483bc27
+        - description: offset of records to return
+          in: query
+          name: start
+          required: false
+          type: integer
+        - description: maximum records to return
+          in: query
+          name: limit
+          required: false
+          type: integer
+        - description: additonal items to return
+          enum:
+            - roles
+            - connections
+            - requirements
+            - history
+            - permissions
+            - custom
+            - photos
+          in: query
+          name: extra
+          required: false
+          type: string
+        - description: >-
+            search for user, exact match on loginid (single user return) then
+            fuzzy match on loginid/email, may return multiple
+          in: query
+          name: search
+          required: false
+          type: string
+        - description: limit results to account id
+          in: query
+          name: account_id
+          required: false
+          type: integer
+        - description: limit results to account connect id
+          in: query
+          name: account_con_id
+          required: false
+          type: integer
+        - in: query
+          name: role_id
+          type: integer
+          description: limit results to users with role
+        - in: query
+          name: allusers
+          type: integer
+          description: 'return all users, even those with no training status'
+          maximum: 1
+          minimum: 0
+        - in: query
+          name: showInactive
+          type: integer
+          description: include inactive users
+          maximum: 1
+          minimum: 0
+        - in: query
+          name: connection_id
+          type: integer
+          description: Limit list to those users with connection_id
+        - in: query
+          name: connection_con_id
+          type: integer
+          description: same as connection_id except on connect id
+      responses:
+        '200':
+          description: OK
+          examples:
+            application/json:
+              stats:
+                apikey: 13b73edae8443990be1aa8f1a483bc27
+                command: users
+                count: 22
+                limit: 3000
+                msg: Good
+                records: 21332
+                start: 1
+                time: 1.234
+                version: v1
+              users:
+                - account:
+                    con_id: 9873
+                    con_flag: Green
+                    id: 2345
+                    name: Joe's Backhoe
+                    type: Supplier
+                  con_id: 23322
+                  connections:
+                    - con_id: 9873
+                      flag: Green
+                      id: 2345
+                      name: Joe's Backhoe
+                  email: joe@demo.com
+                  first_name: Joe
+                  flag: Green
+                  flag_forced: false
+                  history:
+                    - code: 814FLBAS
+                      date: '2019-04-18 12:34'
+                      id: 664226
+                      result: Pass
+                      score: 100
+                      title: Forklift Basics
+                  id: 1234
+                  last_name: Demo
+                  login_id: JOEDEMO
+                  phone: '9991234567'
+                  requirements:
+                    - code: 814FLBAS
+                      date: '2019-04-18'
+                      flag: Green
+                      flag_forced: false
+                      id: 664226
+                      title: Forklift Basics
+                  roles:
+                    - code: ROLABC
+                      flag: Green
+                      flag_forced: false
+                      id: 6646
+                      title: Electrician
+                  custom:
+                    - account:
+                        name: Avetta Supplier
+                        con_id: 464AE
+                        id: '268'
+                      value: SAP-Test01
+                      updated_date: null
+                      created_date: '2021-01-11 16:17:00'
+                      title: 'SAP Personnel #'
+                      id: '2'
+                      key: SAPPersonnel
+                    - account:
+                        name: Avetta Client
+                        con_id: '1'
+                        id: '251'
+                      value: ZORA_Test01
+                      updated_date: '2021-01-12 12:07:00'
+                      created_date: '2021-01-12 12:05:00'
+                      title: 'Zora #'
+                      id: '4'
+                      key: ZoraID
+                  status: Active
+                  title: Electrician
+          headers: {}
+          schema:
+            type: object
+            properties:
+              stats:
+                $ref: '#/definitions/Stats'
+              users:
+                description: Array of users
+                type: array
+                items:
+                  $ref: '#/definitions/UserResponse'
+      tags:
+        - User Endpoint
+      description: Retrieves a list of multiple users
+      summary: Users
+  '/{version}/Auth':
+    post:
+      responses:
+        '200':
+          description: >-
+            When the supplied user name and password is valid, return access
+            token
+          schema:
+            type: object
+            properties:
+              auth:
+                type: object
+                properties:
+                  expires_in:
+                    type: string
+                  url:
+                    type: string
+                  access_token:
+                    type: string
+                  token_type:
+                    type: string
+                  code:
+                    type: string
+              stats:
+                $ref: '#/definitions/Stats'
+          examples:
+            application/json:
+              auth:
+                expires_in: '14400'
+                url: 'http://localhost/worker'
+                access_token: >-
+                  eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdG5hbWUiOiJMaW5nZXNoIDAwMiIsImlzVGltZUF0dGVuZGFuY2UiOjAsInN0YXR1c3R5cGlkIjoiODEiLCJleHBpcmVzaW4iOiIyMDIxLTAxLTEzIDE2OjQ2OjI5IiwiZW1haWxhZGRyIjoibGluZ2VzaC5hdmV0dGFAYXZldHRhLmNvbSIsImxhc3RuYW1lIjoiRW1wbG95ZWUiLCJpc0NsaWVudCI6MCwibG9naW5pZCI6IkxJTkdFU0hURVNUMDAyIiwiYmFzZXVybCI6Imh0dHA6Ly9sb2NhbGhvc3Qvd29ya2VyIiwiZGF0ZW9maXNzdWUiOiIyMDIxLTAxLTEzIDEyOjQ2OjI5IiwiaWQiOiI0ODQiLCJob21lcGhvbmUiOm51bGwsImlzQWRtaW4iOiIxIiwiaXNTdXBwbGllciI6IjYiLCJjb2RlIjpudWxsfQ.hDsVb-hOsJOFUeGfIiutpL5UOfr7BDgAQpeMFcsa-T4
+                token_type: Bearer
+                code: 200 OK
+              stats:
+                msg: Good
+                time: '0.22438'
+                version: v1
+                limit: '3000'
+                type: token
+                start: '1'
+                command: Auth
+      description: Generates access token for the given user name and password
+      parameters:
+        - in: formData
+          name: type
+          type: string
+          default: token
+        - in: formData
+          name: password
+          type: string
+          format: password
+        - in: formData
+          name: username
+          type: string
+      summary: Auth
+      produces:
+        - application/json
+      tags:
+        - Auth Endpoint
+    parameters:
+      - name: version
+        in: path
+        type: string
+        required: true
+  '/{version}/health':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              stats:
+                $ref: '#/definitions/Stats'
+              health:
+                type: string
+                description: Returns the current build version of the API
+          examples:
+            application/json:
+              stats:
+                msg: Good
+                time: '0.01819'
+                version: v1
+                limit: '3000'
+                command: Health
+                start: '1'
+              health: 1.5.5
+      description: Gets the health of the API
+      summary: Health
+      produces:
+        - application/json
+      tags:
+        - Health Endpoint
+    parameters:
+      - name: version
+        in: path
+        type: string
+        required: true
+  '/{version}/user/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              stats:
+                $ref: '#/definitions/Stats'
+              user:
+                $ref: '#/definitions/UserResponse'
+      summary: User
+      tags:
+        - User Endpoint
+      produces:
+        - application/json
+    parameters:
+      - name: version
+        in: path
+        type: string
+        required: true
+      - name: id
+        in: path
+        type: string
+        required: true
+  '/{version}/Status/Users':
+    get:
+      responses:
+        '200':
+          description: Ok
+          schema:
+            type: object
+            properties:
+              summary:
+                type: array
+                items:
+                  $ref: '#/definitions/StatusFlag'
+              stats:
+                $ref: '#/definitions/Stats'
+          examples:
+            application/json:
+              summary:
+                - count: '2'
+                  text: Green
+                  id: '741'
+                - count: 0
+                  text: Yellow
+                  id: '742'
+                - count: '25'
+                  text: Red
+                  id: '743'
+                - count: '27'
+                  text: Total
+                  id: 0
+              stats:
+                msg: Good
+                owner: '137859'
+                time: '0.74838'
+                version: v1
+                limit: '3000'
+                apikey: >-
+                  eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdG5hbWUiOiJSaW9DQWRtaW4xIiwiaXNUaW1lQXR0ZW5kYW5jZSI6MCwic3RhdHVzdHlwaWQiOjgxLCJleHBpcmVzaW4iOiIyMDIxLTAxLTE0IDE2OjA3OjE0IiwiZW1haWxhZGRyIjpudWxsLCJsYXN0bmFtZSI6IlJpb0NBZG1pbjEiLCJpc0NsaWVudCI6MywibG9naW5pZCI6IlJJT0NBRE1JTjEiLCJiYXNldXJsIjoiaHR0cHM6Ly9xYS13b3JrZXIuYXZldHRhLmNvbSIsImRhdGVvZmlzc3VlIjoiMjAyMS0wMS0xNCAxMjowNzoxNCIsImlkIjoxMzc4NTksImhvbWVwaG9uZSI6bnVsbCwiaXNBZG1pbiI6MSwiaXNTdXBwbGllciI6MCwiY29kZSI6bnVsbH0.7Qe6kPRi5uz-Rvh0ZGVEdFY-F2CkhaJ_W_NwdasJK0k
+                start: '1'
+                command: 'Status::Users'
+      summary: Users Status
+      parameters:
+        - in: query
+          name: apikey
+          type: string
+          description: provided consumer key
+          required: true
+        - in: query
+          name: start
+          type: integer
+          description: offset of records to return
+        - in: query
+          name: limit
+          type: integer
+          description: maximum records to return
+        - in: query
+          name: search
+          type: string
+          description: >-
+            search for user, exact match on loginid (single user return) then
+            fuzzy match on loginid/email, may return multiple
+        - in: query
+          name: role_id
+          type: integer
+          description: limit results to users with role
+        - in: query
+          name: account_id
+          type: integer
+          description: limit results to account id
+        - in: query
+          name: site_id
+          type: integer
+          description: limit results to site id
+        - in: query
+          name: flag
+          type: integer
+          description: limit results to flag
+      produces:
+        - application/json
+      tags:
+        - Status Endpoint
+      description: This API endpoint returns the summary status of the users flags
+    parameters:
+      - name: version
+        in: path
+        type: string
+        required: true
+  '/{version}/Status/Connections':
+    get:
+      responses:
+        '200':
+          description: Ok
+          schema:
+            type: object
+            properties:
+              stats:
+                $ref: '#/definitions/Stats'
+              'Status::Connections':
+                type: array
+                items:
+                  $ref: '#/definitions/StatusConnection'
+          examples:
+            application/json:
+              stats:
+                msg: Good
+                owner: '137859'
+                count: 3
+                time: '1.00061'
+                records: '3'
+                version: v1
+                limit: '3000'
+                apikey: >-
+                  eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdG5hbWUiOiJSaW9DQWRtaW4xIiwiaXNUaW1lQXR0ZW5kYW5jZSI6MCwic3RhdHVzdHlwaWQiOjgxLCJleHBpcmVzaW4iOiIyMDIxLTAxLTE0IDIwOjA2OjUyIiwiZW1haWxhZGRyIjpudWxsLCJsYXN0bmFtZSI6IlJpb0NBZG1pbjEiLCJpc0NsaWVudCI6MywibG9naW5pZCI6IlJJT0NBRE1JTjEiLCJiYXNldXJsIjoiaHR0cHM6Ly9xYS13b3JrZXIuYXZldHRhLmNvbSIsImRhdGVvZmlzc3VlIjoiMjAyMS0wMS0xNCAxNjowNjo1MiIsImlkIjoxMzc4NTksImhvbWVwaG9uZSI6bnVsbCwiaXNBZG1pbiI6MSwiaXNTdXBwbGllciI6MCwiY29kZSI6bnVsbH0.doJflW4ZycGqWEQigXksoRe4woy1Nkt_HRNrru_rdaU
+                start: '1'
+                command: 'Status::Connections'
+              'Status::Connections':
+                - con_flag: Green
+                  status: Active
+                  name: Supplier1
+                  con_id: '250051074'
+                  id: '21994'
+                  user_flags:
+                    - count: '1'
+                      text: Green
+                      id: '741'
+                    - count: '0'
+                      text: Yellow
+                      id: '742'
+                    - count: '7'
+                      text: Red
+                      id: '743'
+                    - count: '8'
+                      text: Total
+                      id: 0
+                - con_flag: Red
+                  status: Active
+                  name: Supplier2
+                  con_id: '250051074'
+                  id: '23375'
+                  user_flags:
+                    - count: '0'
+                      text: Green
+                      id: '741'
+                    - count: '0'
+                      text: Yellow
+                      id: '742'
+                    - count: '4'
+                      text: Red
+                      id: '743'
+                    - count: '4'
+                      text: Total
+                      id: 0
+                - con_flag: Red
+                  status: Active
+                  name: Client Corporate
+                  con_id: '250061153'
+                  id: '16353'
+                  user_flags:
+                    - count: '1'
+                      text: Green
+                      id: '741'
+                    - count: '0'
+                      text: Yellow
+                      id: '742'
+                    - count: '14'
+                      text: Red
+                      id: '743'
+                    - count: '15'
+                      text: Total
+                      id: 0
+      tags:
+        - Status Endpoint
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: apikey
+          type: string
+          description: provided consumer key
+          required: true
+        - in: query
+          name: start
+          type: integer
+          description: offset of records to return
+        - in: query
+          name: limit
+          type: integer
+          description: maximum records to return
+        - in: query
+          name: search
+          type: string
+          description: >-
+            search for user, exact match on loginid (single user return) then
+            fuzzy match on loginid/email, may return multiple
+        - in: query
+          name: role_id
+          type: integer
+          description: limit results to users with role
+        - in: query
+          name: account_id
+          type: integer
+          description: limit results to account id
+        - in: query
+          name: site_id
+          type: integer
+          description: limit results to site id
+        - in: query
+          name: flag
+          type: integer
+          description: limit results to flag
+      summary: Connections Status
+      description: >-
+        This API endpoint returns the summary status of the supplier connection
+        flags
+    parameters:
+      - name: version
+        in: path
+        type: string
+        required: true
+  '/{version}/Status/Sites':
+    get:
+      responses:
+        '200':
+          description: Ok
+          schema:
+            type: object
+            properties:
+              stats:
+                $ref: '#/definitions/Stats'
+              status_sites:
+                type: array
+                items:
+                  $ref: '#/definitions/StatusSiteRole'
+          examples:
+            application/json:
+              stats:
+                msg: Good
+                owner: '137859'
+                count: 6
+                time: '0.73267'
+                records: '6'
+                version: v1
+                limit: '3000'
+                apikey: >-
+                  eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdG5hbWUiOiJSaW9DQWRtaW4xIiwiaXNUaW1lQXR0ZW5kYW5jZSI6MCwic3RhdHVzdHlwaWQiOjgxLCJleHBpcmVzaW4iOiIyMDIxLTAxLTE0IDIwOjA2OjUyIiwiZW1haWxhZGRyIjpudWxsLCJsYXN0bmFtZSI6IlJpb0NBZG1pbjEiLCJpc0NsaWVudCI6MywibG9naW5pZCI6IlJJT0NBRE1JTjEiLCJiYXNldXJsIjoiaHR0cHM6Ly9xYS13b3JrZXIuYXZldHRhLmNvbSIsImRhdGVvZmlzc3VlIjoiMjAyMS0wMS0xNCAxNjowNjo1MiIsImlkIjoxMzc4NTksImhvbWVwaG9uZSI6bnVsbCwiaXNBZG1pbiI6MSwiaXNTdXBwbGllciI6MCwiY29kZSI6bnVsbH0.doJflW4ZycGqWEQigXksoRe4woy1Nkt_HRNrru_rdaU
+                start: '1'
+                command: 'Status::Sites'
+              status_sites:
+                - status: Active
+                  name: Site 1
+                  con_id: '250061160'
+                  id: '16356'
+                  user_flags:
+                    - count: '0'
+                      text: Green
+                      id: '741'
+                    - count: '0'
+                      text: Yellow
+                      id: '742'
+                    - count: '5'
+                      text: Red
+                      id: '743'
+                    - count: '5'
+                      text: Total
+                      id: 0
+                - status: Active
+                  name: Site 2
+                  con_id: '250061161'
+                  id: '16357'
+                  user_flags:
+                    - count: '0'
+                      text: Green
+                      id: '741'
+                    - count: '0'
+                      text: Yellow
+                      id: '742'
+                    - count: '3'
+                      text: Red
+                      id: '743'
+                    - count: '3'
+                      text: Total
+                      id: 0
+                - status: Active
+                  name: Site 3
+                  con_id: '250061153'
+                  id: '16353'
+                  user_flags:
+                    - count: '1'
+                      text: Green
+                      id: '741'
+                    - count: '0'
+                      text: Yellow
+                      id: '742'
+                    - count: '1'
+                      text: Red
+                      id: '743'
+                    - count: '2'
+                      text: Total
+                      id: 0
+      tags:
+        - Status Endpoint
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: apikey
+          type: string
+          description: provided consumer key
+          required: true
+        - in: query
+          name: start
+          type: integer
+          description: offset of records to return
+        - in: query
+          name: limit
+          type: integer
+          description: maximum records to return
+        - in: query
+          name: search
+          type: string
+          description: >-
+            search for user, exact match on loginid (single user return) then
+            fuzzy match on loginid/email, may return multiple
+        - in: query
+          name: role_id
+          type: integer
+          description: limit results to users with role
+        - in: query
+          name: account_id
+          type: integer
+          description: limit results to account id
+        - in: query
+          name: site_id
+          type: integer
+          description: limit results to site id
+        - in: query
+          name: flag
+          type: integer
+          description: limit results to flag
+      description: This API endpoint returns the summary status of the sites flags
+      summary: Sites Status
+    parameters:
+      - name: version
+        in: path
+        type: string
+        required: true
+  '/{version}/Status/Roles':
+    get:
+      responses:
+        '200':
+          description: Ok
+          schema:
+            type: object
+            properties:
+              stats:
+                $ref: '#/definitions/Stats'
+              status_sites:
+                type: array
+                items:
+                  $ref: '#/definitions/StatusSiteRole'
+          examples:
+            application/json:
+              stats:
+                msg: Good
+                owner: '137859'
+                count: 6
+                time: '0.73267'
+                records: '6'
+                version: v1
+                limit: '3000'
+                apikey: >-
+                  eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdG5hbWUiOiJSaW9DQWRtaW4xIiwiaXNUaW1lQXR0ZW5kYW5jZSI6MCwic3RhdHVzdHlwaWQiOjgxLCJleHBpcmVzaW4iOiIyMDIxLTAxLTE0IDIwOjA2OjUyIiwiZW1haWxhZGRyIjpudWxsLCJsYXN0bmFtZSI6IlJpb0NBZG1pbjEiLCJpc0NsaWVudCI6MywibG9naW5pZCI6IlJJT0NBRE1JTjEiLCJiYXNldXJsIjoiaHR0cHM6Ly9xYS13b3JrZXIuYXZldHRhLmNvbSIsImRhdGVvZmlzc3VlIjoiMjAyMS0wMS0xNCAxNjowNjo1MiIsImlkIjoxMzc4NTksImhvbWVwaG9uZSI6bnVsbCwiaXNBZG1pbiI6MSwiaXNTdXBwbGllciI6MCwiY29kZSI6bnVsbH0.doJflW4ZycGqWEQigXksoRe4woy1Nkt_HRNrru_rdaU
+                start: '1'
+                command: 'Status::Roles'
+              status_sites:
+                - status: Active
+                  name: Role 1
+                  con_id: '250061160'
+                  id: '16356'
+                  user_flags:
+                    - count: '0'
+                      text: Green
+                      id: '741'
+                    - count: '0'
+                      text: Yellow
+                      id: '742'
+                    - count: '5'
+                      text: Red
+                      id: '743'
+                    - count: '5'
+                      text: Total
+                      id: 0
+                - status: Active
+                  name: Role 2
+                  con_id: '250061161'
+                  id: '16357'
+                  user_flags:
+                    - count: '0'
+                      text: Green
+                      id: '741'
+                    - count: '0'
+                      text: Yellow
+                      id: '742'
+                    - count: '3'
+                      text: Red
+                      id: '743'
+                    - count: '3'
+                      text: Total
+                      id: 0
+                - status: Active
+                  name: Role 3
+                  con_id: '250061153'
+                  id: '16353'
+                  user_flags:
+                    - count: '1'
+                      text: Green
+                      id: '741'
+                    - count: '0'
+                      text: Yellow
+                      id: '742'
+                    - count: '1'
+                      text: Red
+                      id: '743'
+                    - count: '2'
+                      text: Total
+                      id: 0
+      summary: Roles Status
+      description: This API endpoint returns the summary status of the roles flags
+      tags:
+        - Status Endpoint
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: apikey
+          type: string
+          description: provided consumer key
+          required: true
+        - in: query
+          name: start
+          type: integer
+          description: offset of records to return
+        - in: query
+          name: limit
+          type: integer
+          description: maximum records to return
+        - in: query
+          name: search
+          type: string
+          description: >-
+            search for user, exact match on loginid (single user return) then
+            fuzzy match on loginid/email, may return multiple
+        - in: query
+          name: role_id
+          type: integer
+          description: limit results to users with role
+        - in: query
+          name: account_id
+          type: integer
+          description: limit results to account id
+        - in: query
+          name: site_id
+          type: integer
+          description: limit results to site id
+        - in: query
+          name: flag
+          type: integer
+          description: limit results to flag
+    parameters:
+      - name: version
+        in: path
+        type: string
+        required: true
+  '/{version}/user/list/{id}':
+    get:
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              stats:
+                $ref: '#/definitions/Stats'
+              user:
+                $ref: '#/definitions/AttendanceList'
+          examples:
+            application/json:
+              user:
+                list:
+                  - out: '2021-05-10 17:00:00'
+                    in: '2021-05-10 12:30:00'
+                  - out: '2021-06-13 17:00:00'
+                    in: '2021-06-13 08:00:00'
+                  - out: '2021-06-15 10:54:00'
+                    in: '2021-06-14 08:00:00'
+              stats:
+                msg: Good
+                owner: '230351'
+                time: '0.16866'
+                version: v1
+                site: '27215'
+                limit: '3000'
+                id: '230372'
+                apikey: >-
+                  eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdG5hbWUiOiJEaWFubmEiLCJpc1RpbWVBdHRlbmRhbmNlIjoxLCJzdGF0dXN0eXBpZCI6ODEsImV4cGlyZXNpbiI6IjIwMjEtMDYtMTUgMTQ6NDM6NTAiLCJlbWFpbGFkZHIiOm51bGwsImxhc3RuYW1lIjoiTm9ybWFsIiwiaXNDbGllbnQiOjIsImxvZ2luaWQiOiJDTElFTlRBRE1JTkEiLCJiYXNldXJsIjoiaHR0cHM6Ly9xYS13b3JrZXIuYXZldHRhLmNvbSIsImRhdGVvZmlzc3VlIjoiMjAyMS0wNi0xNSAxMDo0Mzo1MCIsImlkIjoyMzAzNTEsImhvbWVwaG9uZSI6bnVsbCwiaXNBZG1pbiI6MSwiaXNTdXBwbGllciI6MCwiY29kZSI6bnVsbH0.DhymY4_EdMi0hkqmkHmVywXYJK1x8YC9SrX5vtE9evk
+                start: '1'
+                command: User
+      summary: Attendance/list
+      description: Gets the list of user check in/out history
+      tags:
+        - User Endpoint
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: version
+          type: string
+          required: true
+          description: version
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: user id
+        - in: query
+          name: apikey
+          type: string
+          required: true
+          description: provided consumer key
+        - in: query
+          name: site
+          type: integer
+          required: true
+          description: Site id (Group ID)
+    parameters:
+      - name: version
+        in: path
+        type: string
+        required: true
+      - name: id
+        in: path
+        type: string
+        required: true
+  '/{version}/user/checkin/{id}':
+    post:
+      responses:
+        '200':
+          description: Ok
+          schema:
+            type: object
+            properties:
+              stats:
+                $ref: '#/definitions/Stats'
+              user:
+                $ref: '#/definitions/AttendanceSuccess'
+          examples:
+            application/json:
+              user:
+                success: true
+                status: Good
+                code: 200
+              stats:
+                msg: Good
+                owner: '230351'
+                time: '0.26047'
+                version: v1
+                site: '27215'
+                limit: '3000'
+                id: '230372'
+                apikey: >-
+                  eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdG5hbWUiOiJEaWFubmEiLCJpc1RpbWVBdHRlbmRhbmNlIjoxLCJzdGF0dXN0eXBpZCI6ODEsImV4cGlyZXNpbiI6IjIwMjEtMDYtMTUgMTQ6NDM6NTAiLCJlbWFpbGFkZHIiOm51bGwsImxhc3RuYW1lIjoiTm9ybWFsIiwiaXNDbGllbnQiOjIsImxvZ2luaWQiOiJDTElFTlRBRE1JTkEiLCJiYXNldXJsIjoiaHR0cHM6Ly9xYS13b3JrZXIuYXZldHRhLmNvbSIsImRhdGVvZmlzc3VlIjoiMjAyMS0wNi0xNSAxMDo0Mzo1MCIsImlkIjoyMzAzNTEsImhvbWVwaG9uZSI6bnVsbCwiaXNBZG1pbiI6MSwiaXNTdXBwbGllciI6MCwiY29kZSI6bnVsbH0.DhymY4_EdMi0hkqmkHmVywXYJK1x8YC9SrX5vtE9evk
+                start: '1'
+                command: User
+      summary: Attendance/checkin
+      description: Check-in the worker to the site
+      tags:
+        - User Endpoint
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: version
+          type: string
+          required: true
+          description: version
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: user id
+        - in: query
+          name: apikey
+          type: string
+          required: true
+          description: provided consumer key
+        - in: query
+          name: site
+          type: integer
+          required: true
+          description: Site id (Group ID)
+        - in: query
+          name: flag
+          type: string
+          description: Worker flag for the site
+        - in: query
+          name: notes
+          type: string
+          description: notes
+        - in: query
+          name: time_in
+          type: string
+          description: |-
+            check-in time in yyyy-MM-dd hh:mm format (2021-06-13 08:00)
+
+            Defaults to Now
+          format: date-time
+          default: current date and time
+    parameters:
+      - name: version
+        in: path
+        type: string
+        required: true
+      - name: id
+        in: path
+        type: string
+        required: true
+  '/{version}/user/checkout/{id}':
+    post:
+      responses:
+        '200':
+          description: Ok
+          schema:
+            type: object
+            properties:
+              stats:
+                $ref: '#/definitions/Stats'
+              user:
+                $ref: '#/definitions/AttendanceSuccess'
+          examples:
+            application/json:
+              user:
+                success: true
+                status: Good
+                code: 200
+              stats:
+                msg: Good
+                owner: '230351'
+                time: '0.20928'
+                version: v1
+                site: '27215'
+                limit: '3000'
+                id: '230372'
+                apikey: >-
+                  eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdG5hbWUiOiJEaWFubmEiLCJpc1RpbWVBdHRlbmRhbmNlIjoxLCJzdGF0dXN0eXBpZCI6ODEsImV4cGlyZXNpbiI6IjIwMjEtMDYtMTUgMTQ6NDM6NTAiLCJlbWFpbGFkZHIiOm51bGwsImxhc3RuYW1lIjoiTm9ybWFsIiwiaXNDbGllbnQiOjIsImxvZ2luaWQiOiJDTElFTlRBRE1JTkEiLCJiYXNldXJsIjoiaHR0cHM6Ly9xYS13b3JrZXIuYXZldHRhLmNvbSIsImRhdGVvZmlzc3VlIjoiMjAyMS0wNi0xNSAxMDo0Mzo1MCIsImlkIjoyMzAzNTEsImhvbWVwaG9uZSI6bnVsbCwiaXNBZG1pbiI6MSwiaXNTdXBwbGllciI6MCwiY29kZSI6bnVsbH0.DhymY4_EdMi0hkqmkHmVywXYJK1x8YC9SrX5vtE9evk
+                start: '1'
+                command: User
+      description: Check-in the worker from the site
+      summary: Attendance/checkout
+      tags:
+        - User Endpoint
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: version
+          type: string
+          required: true
+          description: version
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: user id
+        - in: query
+          name: apikey
+          type: string
+          description: provided consumer key
+          required: true
+        - in: query
+          name: site
+          type: integer
+          required: true
+          description: Site id (Group ID)
+        - in: query
+          name: flag
+          type: string
+          description: Worker flag for the site
+        - in: query
+          name: notes
+          type: string
+          description: notes
+        - in: query
+          name: time_out
+          type: string
+          description: |-
+            check-out time in yyyy-MM-dd hh:mm format (2021-06-13 08:00)
+
+            Defaults to Now
+          format: date-time
+          default: current date and time
+    parameters:
+      - name: version
+        in: path
+        type: string
+        required: true
+      - name: id
+        in: path
+        type: string
+        required: true
+definitions:
+  API: {}
+  AccountConnection:
+    type: object
+    properties:
+      id:
+        description: account id
+        type: number
+      con_id:
+        description: connect account id
+        type: number
+      name:
+        description: account title
+        type: string
+      con_flag:
+        description: account flag status
+        enum:
+          - Green
+          - Amber
+          - Red
+        type: string
+      status:
+        description: account status
+        enum:
+          - Active
+          - Inactive
+        type: string
+      external_id:
+        type:
+          - string
+          - array
+        items:
+          $ref: '#/definitions/ExternalID'
+  AccountResponse:
+    type: object
+    properties:
+      id:
+        description: account id
+        type: number
+      con_id:
+        description: connect account id
+        type: number
+      name:
+        description: account name
+        type: string
+      con_flag:
+        description: account flag status
+        enum:
+          - Green
+          - Amber
+          - Red
+        type: string
+      status:
+        description: account status
+        enum:
+          - Active
+          - Inactive
+        type: string
+      type:
+        description: Account Type
+        enum:
+          - Client
+          - Supplier
+          - ClientSupplier
+        type: string
+      external_id:
+        type: array
+        items: {}
+      connections:
+        description: connections for this account
+        type: array
+        items:
+          $ref: '#/definitions/AccountConnection'
+      admins:
+        type: array
+        items:
+          $ref: '#/definitions/AccountAdmin'
+      users:
+        description: users assigned to this account
+        type: array
+        items:
+          $ref: '#/definitions/AccountUser'
+  AccountAdmin:
+    type: object
+    properties:
+      id:
+        description: user id
+        type: number
+      con_id:
+        description: connect user id
+        type: number
+      login_id:
+        description: user login id
+        type: string
+      email:
+        description: user email address
+        type: string
+      first_name:
+        description: user first namne
+        type: string
+      last_name:
+        description: user last name
+        type: string
+      phone:
+        description: user phone number home or work
+        type: string
+      status:
+        description: user status
+        enum:
+          - Active
+          - Inactive
+        type: string
+      title:
+        description: user title
+        type: string
+      permissions:
+        type:
+          - string
+          - array
+        items:
+          $ref: '#/definitions/UserPermission'
+  AccountUser:
+    type: object
+    properties:
+      con_id:
+        description: connect user id
+        type: number
+      email:
+        description: user email address
+        type: string
+      first_name:
+        description: user first namne
+        type: string
+      flag:
+        description: user training status
+        enum:
+          - Green
+          - Amber
+          - Red
+        type: string
+      flag_forced:
+        description: flag status is forced
+        type: boolean
+      id:
+        description: user id
+        type: number
+      last_name:
+        description: user last name
+        type: string
+      login_id:
+        description: user login id
+        type: string
+      phone:
+        description: user phone number home or work
+        type: string
+      status:
+        description: user status
+        enum:
+          - Active
+          - Inactive
+        type: string
+      title:
+        description: user title
+        type: string
+  Stats:
+    properties:
+      apikey:
+        description: apikey used
+        type: string
+      command:
+        description: current command
+        type: string
+      count:
+        description: count of records returned
+        type: number
+      limit:
+        description: limit of records to return
+        type: number
+      msg:
+        description: message
+        type: string
+      records:
+        description: count of records available
+        type: number
+      start:
+        description: start index
+        type: number
+      time:
+        description: time to process request
+        type: number
+      version:
+        description: version requested
+        type: string
+    type: object
+  UserAccount:
+    type: object
+    properties:
+      id:
+        description: account id
+        type: number
+      parent_id:
+        type: number
+      con_id:
+        description: connect account id
+        type: number
+      con_flag:
+        description: user training status
+        enum:
+          - Green
+          - Amber
+          - Red
+        type: string
+      name:
+        description: name of account
+        type: string
+      type:
+        description: Account Type
+        enum:
+          - Client
+          - Supplier
+          - ClientSupplier
+        type: string
+      external_id:
+        type: array
+        items:
+          $ref: '#/definitions/ExternalID'
+  UserConnection:
+    type: object
+    properties:
+      id:
+        description: account id
+        type: number
+      name:
+        description: name of account
+        type: string
+      con_id:
+        description: connect account id
+        type: number
+      con_flag:
+        description: user training status
+        enum:
+          - Green
+          - Amber
+          - Red
+        type: string
+  UserHistory:
+    properties:
+      id:
+        description: Role id
+        type: number
+      code:
+        description: Code
+        type: string
+      title:
+        description: Title
+        type: string
+      date:
+        description: date
+        type: string
+      score:
+        type: number
+      result:
+        enum:
+          - Pass
+          - Fail
+        type: string
+    type: object
+  UserRequirement:
+    properties:
+      id:
+        description: Role id
+        type: number
+      code:
+        description: Code
+        type: string
+      title:
+        description: Title
+        type: string
+      date:
+        description: due date
+        type: string
+      flag:
+        description: user training status
+        enum:
+          - Green
+          - Amber
+          - Red
+        type: string
+      flag_forced:
+        description: flag status is forced
+        type: boolean
+    type: object
+  UserResponse:
+    type: object
+    properties:
+      id:
+        description: user id
+        type: number
+      con_id:
+        description: connect user id
+        type: number
+      login_id:
+        description: user login id
+        type: string
+      email:
+        description: user email address
+        type: string
+      first_name:
+        description: user first namne
+        type: string
+      last_name:
+        description: user last name
+        type: string
+      title:
+        description: user title
+        type: string
+      phone:
+        description: user phone number home or work
+        type: string
+      status:
+        description: user status
+        enum:
+          - Active
+          - Inactive
+        type: string
+      flag:
+        description: user training status
+        enum:
+          - Green
+          - Amber
+          - Red
+        type: string
+      flag_forced:
+        description: flag status is forced
+        type: boolean
+      account:
+        $ref: '#/definitions/UserAccount'
+      permissions:
+        type: array
+        items:
+          $ref: '#/definitions/UserPermission'
+      connections:
+        type: array
+        description: accounts user is connected to
+        items:
+          $ref: '#/definitions/UserConnection'
+      requirements:
+        description: roles for this user
+        type: array
+        items:
+          $ref: '#/definitions/UserRequirement'
+      history:
+        description: history for this user
+        type: array
+        items:
+          $ref: '#/definitions/UserHistory'
+      roles:
+        description: roles for this user
+        type: array
+        items:
+          $ref: '#/definitions/UserRole'
+      custom:
+        type: array
+        description: Custom data of the user
+        items:
+          $ref: '#/definitions/UserCustomData'
+  UserRole:
+    properties:
+      id:
+        description: Role id
+        type: number
+      code:
+        description: Code
+        type: string
+      title:
+        description: Title
+        type: string
+      flag:
+        description: user training status
+        enum:
+          - Green
+          - Amber
+          - Red
+        type: string
+      flag_forced:
+        description: flag status is forced
+        type: boolean
+    type: object
+  ExternalID:
+    type: object
+    properties:
+      type:
+        type: string
+      value:
+        type: string
+  UserPermission:
+    type: object
+    properties:
+      id:
+        type: number
+      name:
+        type: string
+  UserCustomData:
+    type: object
+    properties:
+      account:
+        type: object
+        properties:
+          name:
+            type: string
+            description: Account Name
+          con_id:
+            type: string
+            description: Connection ID
+          id:
+            type: string
+            description: Account ID
+      value:
+        type: string
+        description: Custom data value
+      updated_date:
+        type:
+          - 'null'
+          - string
+        description: Custom data updated date
+      created_date:
+        type: string
+        description: Custom data created date
+      title:
+        type: string
+        description: Display Label
+      id:
+        type: string
+        description: Custom data primary key value
+      key:
+        type: string
+        description: Internal Field Label
+  StatusFlag:
+    type: object
+    properties:
+      count:
+        type: string
+        description: Status Count
+      text:
+        type: string
+        description: 'Status Text '
+        example: '(Green, Yellow, Red, Total)'
+      id:
+        type: string
+        description: Status ID
+  StatusSiteRole:
+    type: object
+    properties:
+      status:
+        type: string
+        description: Site or Role Status
+        example: Active or Inactive
+      name:
+        type: string
+        description: Site or Role Name
+      con_id:
+        type: string
+        description: Connection ID
+      id:
+        type: string
+        description: Site / Role ID
+      user_flags:
+        type: array
+        items:
+          $ref: '#/definitions/StatusFlag'
+  StatusConnection:
+    type: object
+    properties:
+      con_flag:
+        type: string
+        description: Connection Flag
+        example: 'Green, Red, Yellow'
+      status:
+        type: string
+        description: Connection Status
+        example: 'Active, Inactive'
+      name:
+        type: string
+        description: Connection Name or Supplier Name
+      con_id:
+        type: string
+        description: Connection ID (Group Code)
+      id:
+        type: string
+        description: Group ID
+      user_flags:
+        type: array
+        items:
+          $ref: '#/definitions/StatusFlag'
+  AttendanceList:
+    type: object
+    properties:
+      list:
+        type: array
+        items:
+          type: object
+          properties:
+            out:
+              type: string
+              description: check-out date time (GMT date/time)
+            in:
+              type: string
+              description: check-int date time (GMT date/time)
+  AttendanceSuccess:
+    type: object
+    properties:
+      success:
+        type: boolean
+      status:
+        type: string
+      code:
+        type: integer
+securityDefinitions: {}
+tags:
+  - name: Account Endpoint
+  - name: User Endpoint
+  - name: Auth Endpoint
+  - name: Health Endpoint
+  - name: Status Endpoint
+responses: {}
+parameters: {}
