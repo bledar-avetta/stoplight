@@ -5,6 +5,7 @@
     "title": "Worker Management",
     "version": ""
   },
+  "host": ""
   "basePath": "/api/",
   "schemes": [
     "wss"
@@ -2488,6 +2489,5 @@
     }
   ],
   "responses": {},
-  "parameters": {},
-  "host": "subdomain.avetta.com"
+  "parameters": {}
 }
