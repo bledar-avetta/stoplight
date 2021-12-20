@@ -5,7 +5,7 @@
     "title": "Worker Management",
     "version": ""
   },
-  "host": ""
+  "host": "",
   "basePath": "/api/",
   "schemes": [
     "wss"
