@@ -2488,5 +2488,6 @@
     }
   ],
   "responses": {},
-  "parameters": {}
+  "parameters": {},
+  "host": "subdomain.avetta.com"
 }
