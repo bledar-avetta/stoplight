@@ -5,8 +5,8 @@
     "title": "Worker Management",
     "version": ""
   },
-  "host": "",
-  "basePath": "/api/",
+  "host": "/api/",
+  "basePath": "",
   "schemes": [
     ""
   ],
