@@ -227,7 +227,8 @@
         ],
         "description": "List of `User` data.",
         "summary": "Get Users",
-        "x-private": true
+        "x-private": true,
+        "x-internal": true
       }
     },
     "/v1/accounts/{account_id}/users/count": {
@@ -1207,7 +1208,8 @@
         ],
         "description": "List of hierarchy data. Top-level, corporate accounts with have a `parent_id` of null.",
         "summary": "Get Hierarchies",
-        "x-private": true
+        "x-private": true,
+        "x-internal": true
       }
     },
     "/v1/hierarchies/{accountId}": {
@@ -1336,7 +1338,8 @@
         ],
         "description": "Hierarchy data for a given account ID. Top-level, corporate accounts with have a `parent_id` of null.",
         "summary": "Get Hierarchy Data",
-        "x-private": true
+        "x-private": true,
+        "x-internal": true
       }
     },
     "/v1/insurance": {
@@ -2545,8 +2548,438 @@
             },
             "headers": {},
             "schema": {
-              "items": {},
-              "type": "array"
+              "type": "array",
+              "description": "",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "dba_name",
+                  "company_url",
+                  "description",
+                  "primary_contact",
+                  "address",
+                  "billing_address",
+                  "account_status",
+                  "updated_date",
+                  "external_id",
+                  "supplier_tags",
+                  "flags",
+                  "trades",
+                  "service_types"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "number"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "dba_name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "company_url": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "primary_contact": {
+                    "type": "object",
+                    "properties": {
+                      "email": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "fax": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "first_name": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "last_name": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "phone": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "email",
+                      "fax",
+                      "first_name",
+                      "last_name",
+                      "phone"
+                    ]
+                  },
+                  "address": {
+                    "type": "object",
+                    "properties": {
+                      "address_line1": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "address_line2": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "city": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "country": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "country_subdivision": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "postal_code": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "address_line1",
+                      "address_line2",
+                      "city",
+                      "country",
+                      "country_subdivision",
+                      "postal_code"
+                    ]
+                  },
+                  "billing_address": {
+                    "type": "object",
+                    "properties": {
+                      "address_line1": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "city": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "country": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "country_subdivision": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "postal_code": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "address_line1",
+                      "city",
+                      "country",
+                      "country_subdivision",
+                      "postal_code"
+                    ]
+                  },
+                  "account_status": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "updated_date": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "external_id": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 1,
+                    "items": {
+                      "required": [
+                        "client_id",
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "client_id": {
+                          "type": "number"
+                        },
+                        "type": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "value": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    }
+                  },
+                  "supplier_tags": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 1,
+                    "items": {
+                      "required": [
+                        "client_id"
+                      ],
+                      "properties": {
+                        "tags": {
+                          "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
+                          "items": {
+                            "required": [
+                              "id",
+                              "name"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "number"
+                              },
+                              "name": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          }
+                        },
+                        "client_id": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  },
+                  "flags": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 1,
+                    "items": {
+                      "required": [
+                        "client_id",
+                        "client_name",
+                        "forced_expiration",
+                        "is_forced",
+                        "system_flag"
+                      ],
+                      "properties": {
+                        "client_id": {
+                          "type": "number"
+                        },
+                        "client_name": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "forced_expiration": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "is_forced": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "system_flag": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "system_flag_details": {
+                          "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
+                          "items": {
+                            "required": [
+                              "flag",
+                              "forced_expiration",
+                              "is_forced"
+                            ],
+                            "properties": {
+                              "flag": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "forced_expiration": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "is_forced": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "reasons": {
+                                "type": "array",
+                                "uniqueItems": true,
+                                "minItems": 1,
+                                "items": {
+                                  "required": [
+                                    "85"
+                                  ],
+                                  "properties": {
+                                    "85": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "trades": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 1,
+                    "items": {
+                      "required": [
+                        "frequency"
+                      ],
+                      "properties": {
+                        "frequency": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "service_offerings": {
+                          "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
+                          "items": {
+                            "required": [
+                              "82"
+                            ],
+                            "properties": {
+                              "82": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "service_types": {
+                    "type": "array",
+                    "items": {
+                      "required": [],
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "x-examples": {
+                "example-1": [
+                  {
+                    "id": 89010,
+                    "name": "Bob's Plumbing Services",
+                    "dba_name": "Bob's Plumbing Services, LLC",
+                    "company_url": "www.bobsplumbing.com",
+                    "description": "Providing plumbing services",
+                    "primary_contact": {
+                      "email": "bob.smith@fakeemail.com",
+                      "fax": "555 555 4567",
+                      "first_name": "Bob",
+                      "last_name": "Smith",
+                      "phone": "555 555 1234"
+                    },
+                    "address": {
+                      "address_line1": "123 Main St",
+                      "address_line2": "Suite 100",
+                      "city": "Irvine",
+                      "country": "United States",
+                      "country_subdivision": "California",
+                      "postal_code": "92614"
+                    },
+                    "billing_address": {
+                      "address_line1": "123 Main St",
+                      "city": "Irvine",
+                      "country": "United States",
+                      "country_subdivision": "California",
+                      "postal_code": "92614"
+                    },
+                    "account_status": "Active",
+                    "updated_date": "2016-07-23 05:10:57",
+                    "external_id": [
+                      {
+                        "client_id": 123,
+                        "type": "Other",
+                        "value": "234489"
+                      }
+                    ],
+                    "supplier_tags": [
+                      {
+                        "tags": [
+                          {
+                            "id": 223,
+                            "name": "Sample Tag"
+                          }
+                        ],
+                        "client_id": 123
+                      }
+                    ],
+                    "flags": [
+                      {
+                        "client_id": 123,
+                        "client_name": "Oil Rig",
+                        "forced_expiration": "2018-06-30 00:00:00",
+                        "is_forced": "True",
+                        "system_flag": "Amber",
+                        "system_flag_details": [
+                          {
+                            "flag": "Amber",
+                            "forced_expiration": "2018-06-30 00:00:00",
+                            "is_forced": "True",
+                            "reasons": [
+                              {
+                                "85": "High TRIR, Missing Documentation"
+                              },
+                              {
+                                "42": "General Liability is missing"
+                              }
+                            ]
+                          },
+                          {
+                            "flag": "Green",
+                            "is_forced": "False",
+                            "forced_expiration": "",
+                            "reasons": [
+                              ""
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "trades": [
+                      {
+                        "frequency": "most",
+                        "service_offerings": [
+                          {
+                            "82": "Welding"
+                          },
+                          {
+                            "193": "Manufacturing"
+                          }
+                        ]
+                      }
+                    ],
+                    "service_types": [
+                      "On-site",
+                      "Off-site"
+                    ]
+                  }
+                ]
+              }
             }
           },
           "400": {
