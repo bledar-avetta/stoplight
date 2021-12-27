@@ -1011,6 +1011,13 @@
               "type": "object"
             }
           },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
           "500": {
             "description": "Internal Server Error",
             "examples": {
@@ -1036,7 +1043,7 @@
         "tags": [
           "File Endpoint"
         ],
-        "description": "Return the binary file. The response content type header is set to be a PDF as an example, but other file types can be returned such as text, or doc/docx.\nThe URL for this endpoint is returned by the `href` field from the `Audit Data` endpoint. That `href` field will require an additional `&apikey=INSERT_API_KEY_HERE` to be appended to the end of the URL for a valid file call to be made.",
+        "description": "Return the binary file. The response content type header is set to be a PDF as an example, but other file types can be returned such as text, or doc/docx.\nThe URL for this endpoint is returned by the `href` field from the `Form Data` endpoint. That `href` field will require an additional `&apikey=INSERT_API_KEY_HERE` to be appended to the end of the URL for a valid file call to be made.",
         "summary": "Get File"
       }
     },
@@ -2326,8 +2333,28 @@
             },
             "headers": {},
             "schema": {
-              "items": {},
-              "type": "array"
+              "type": "array",
+              "description": "",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "object",
+                "required": [
+                  "total_records"
+                ],
+                "properties": {
+                  "total_records": {
+                    "type": "number"
+                  }
+                }
+              },
+              "x-examples": {
+                "example-1": [
+                  {
+                    "total_records": 1845
+                  }
+                ]
+              }
             }
           },
           "400": {
