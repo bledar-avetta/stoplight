@@ -930,36 +930,36 @@
       }
     },
     "/v1/files/{supplierId}/{id}": {
+      "parameters": [
+        {
+          "description": "The ID of the supplier",
+          "in": "path",
+          "name": "supplierId",
+          "required": true,
+          "type": "number",
+          "x-example": "44282"
+        },
+        {
+          "description": "The ID of the file",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "x-example": "2020-04-04T04:40:00.066Z~~~SomeFile.pdf"
+        },
+        {
+          "description": "The apikey for the client",
+          "in": "query",
+          "name": "apikey",
+          "required": true,
+          "type": "string",
+          "x-example": "bz6cfchkdgzxj65obla5gcw3gcslr2rl"
+        }
+      ],
       "get": {
         "produces": [
           "application/pdf",
           "application/json; charset=utf-8"
-        ],
-        "parameters": [
-          {
-            "description": "The ID of the supplier",
-            "in": "path",
-            "name": "supplierId",
-            "required": true,
-            "type": "number",
-            "x-example": "44282"
-          },
-          {
-            "description": "The ID of the file",
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "type": "string",
-            "x-example": "2020-04-04T04:40:00.066Z~~~SomeFile.pdf"
-          },
-          {
-            "description": "The apikey for the client",
-            "in": "query",
-            "name": "apikey",
-            "required": true,
-            "type": "string",
-            "x-example": "bz6cfchkdgzxj65obla5gcw3gcslr2rl"
-          }
         ],
         "responses": {
           "200": {
