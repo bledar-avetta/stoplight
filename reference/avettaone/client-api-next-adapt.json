@@ -2034,182 +2034,290 @@
             "headers": {},
             "schema": {
               "type": "array",
+              "description": "",
+              "minItems": 1,
+              "uniqueItems": true,
               "items": {
                 "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "dba_name",
+                  "company_url",
+                  "description",
+                  "primary_contact",
+                  "address",
+                  "billing_address",
+                  "account_status",
+                  "updated_date",
+                  "external_id",
+                  "supplier_tags",
+                  "flags",
+                  "trades",
+                  "service_types"
+                ],
                 "properties": {
                   "id": {
-                    "type": "integer"
+                    "type": "number"
                   },
                   "name": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 1
                   },
                   "dba_name": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 1
                   },
                   "company_url": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 1
                   },
                   "description": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 1
                   },
                   "primary_contact": {
                     "type": "object",
                     "properties": {
                       "id": {
-                        "type": "integer"
+                        "type": "number"
                       },
                       "first_name": {
-                        "type": "string"
+                        "type": "string",
+                        "minLength": 1
                       },
                       "last_name": {
-                        "type": "string"
+                        "type": "string",
+                        "minLength": 1
                       },
                       "email": {
-                        "type": "string"
+                        "type": "string",
+                        "minLength": 1
                       },
                       "phone": {
-                        "type": "string"
+                        "type": "string",
+                        "minLength": 1
                       },
                       "fax": {
-                        "type": "string"
+                        "type": "string",
+                        "minLength": 1
                       }
-                    }
-                  },
-                  "isForced": {
-                    "type": "string"
+                    },
+                    "required": [
+                      "id",
+                      "first_name",
+                      "last_name",
+                      "email",
+                      "phone",
+                      "fax"
+                    ]
                   },
                   "address": {
                     "type": "object",
                     "properties": {
                       "address_line1": {
-                        "type": "string"
+                        "type": "string",
+                        "minLength": 1
                       },
                       "address_line2": {
-                        "type": "string"
+                        "type": "string",
+                        "minLength": 1
                       },
                       "city": {
-                        "type": "string"
+                        "type": "string",
+                        "minLength": 1
                       },
                       "country": {
-                        "type": "string"
+                        "type": "string",
+                        "minLength": 1
                       },
                       "country_subdivision": {
-                        "type": "string"
+                        "type": "string",
+                        "minLength": 1
                       },
                       "postal_code": {
-                        "type": "string"
+                        "type": "string",
+                        "minLength": 1
                       }
-                    }
+                    },
+                    "required": [
+                      "address_line1",
+                      "address_line2",
+                      "city",
+                      "country",
+                      "country_subdivision",
+                      "postal_code"
+                    ]
                   },
                   "billing_address": {
                     "type": "object",
                     "properties": {
                       "address_line1": {
-                        "type": "string"
-                      },
-                      "address_line2": {
-                        "type": "string"
+                        "type": "string",
+                        "minLength": 1
                       },
                       "city": {
-                        "type": "string"
+                        "type": "string",
+                        "minLength": 1
                       },
                       "country": {
-                        "type": "string"
+                        "type": "string",
+                        "minLength": 1
                       },
                       "country_subdivision": {
-                        "type": "string"
+                        "type": "string",
+                        "minLength": 1
                       },
                       "postal_code": {
-                        "type": "string"
+                        "type": "string",
+                        "minLength": 1
                       }
-                    }
+                    },
+                    "required": [
+                      "address_line1",
+                      "city",
+                      "country",
+                      "country_subdivision",
+                      "postal_code"
+                    ]
                   },
                   "account_status": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 1
                   },
                   "updated_date": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 1
                   },
-                  "externalId": {
+                  "external_id": {
                     "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 1,
                     "items": {
-                      "type": "object",
+                      "required": [
+                        "client_id",
+                        "type",
+                        "value"
+                      ],
                       "properties": {
-                        "clientId": {
-                          "type": "integer"
+                        "client_id": {
+                          "type": "number"
                         },
                         "type": {
-                          "type": "string"
+                          "type": "string",
+                          "minLength": 1
                         },
                         "value": {
-                          "type": "string"
+                          "type": "string",
+                          "minLength": 1
                         }
                       }
                     }
                   },
                   "supplier_tags": {
                     "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 1,
                     "items": {
-                      "type": "object",
+                      "required": [
+                        "client_id"
+                      ],
                       "properties": {
                         "tags": {
                           "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
                           "items": {
-                            "type": "object",
+                            "required": [
+                              "id",
+                              "name"
+                            ],
                             "properties": {
                               "id": {
-                                "type": "integer"
+                                "type": "number"
                               },
                               "name": {
-                                "type": "string"
+                                "type": "string",
+                                "minLength": 1
                               }
                             }
                           }
                         },
                         "client_id": {
-                          "type": "integer"
+                          "type": "number"
                         }
                       }
                     }
                   },
                   "flags": {
                     "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 1,
                     "items": {
-                      "type": "object",
+                      "required": [
+                        "client_id",
+                        "client_name",
+                        "forced_expiration",
+                        "is_forced",
+                        "system_flag"
+                      ],
                       "properties": {
                         "client_id": {
-                          "type": "integer"
+                          "type": "number"
                         },
                         "client_name": {
-                          "type": "string"
+                          "type": "string",
+                          "minLength": 1
                         },
                         "forced_expiration": {
-                          "type": "string"
+                          "type": "string",
+                          "minLength": 1
                         },
                         "is_forced": {
-                          "type": "string"
+                          "type": "string",
+                          "minLength": 1
                         },
                         "system_flag": {
-                          "type": "string"
+                          "type": "string",
+                          "minLength": 1
                         },
                         "system_flag_details": {
                           "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
                           "items": {
-                            "type": "object",
+                            "required": [
+                              "flag",
+                              "forced_expiration",
+                              "is_forced"
+                            ],
                             "properties": {
                               "flag": {
-                                "type": "string"
+                                "type": "string",
+                                "minLength": 1
                               },
                               "forced_expiration": {
-                                "type": "string"
+                                "type": "string",
+                                "minLength": 1
                               },
                               "is_forced": {
-                                "type": "string"
+                                "type": "string",
+                                "minLength": 1
                               },
                               "reasons": {
                                 "type": "array",
+                                "uniqueItems": true,
+                                "minItems": 1,
                                 "items": {
-                                  "type": "object"
+                                  "required": [
+                                    "85"
+                                  ],
+                                  "properties": {
+                                    "85": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  }
                                 }
                               }
                             }
@@ -2220,16 +2328,31 @@
                   },
                   "trades": {
                     "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 1,
                     "items": {
-                      "type": "object",
+                      "required": [
+                        "frequency"
+                      ],
                       "properties": {
                         "frequency": {
-                          "type": "string"
+                          "type": "string",
+                          "minLength": 1
                         },
                         "service_offerings": {
                           "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
                           "items": {
-                            "type": "object"
+                            "required": [
+                              "82"
+                            ],
+                            "properties": {
+                              "82": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
                           }
                         }
                       }
@@ -2238,10 +2361,114 @@
                   "service_types": {
                     "type": "array",
                     "items": {
-                      "type": "string"
+                      "required": [],
+                      "properties": {}
                     }
                   }
                 }
+              },
+              "x-examples": {
+                "example-1": [
+                  {
+                    "id": 89010,
+                    "name": "Bob's Plumbing Services",
+                    "dba_name": "Bob's Plumbing Services, LLC",
+                    "company_url": "www.bobsplumbing.com",
+                    "description": "Providing plumbing services",
+                    "primary_contact": {
+                      "id": 123,
+                      "first_name": "Bob",
+                      "last_name": "Smith",
+                      "email": "bob.smith@fakeemail.com",
+                      "phone": "555 555 1234",
+                      "fax": "555 555 4567"
+                    },
+                    "address": {
+                      "address_line1": "123 Main St",
+                      "address_line2": "Suite 100",
+                      "city": "Irvine",
+                      "country": "United States",
+                      "country_subdivision": "California",
+                      "postal_code": "92614"
+                    },
+                    "billing_address": {
+                      "address_line1": "123 Main St",
+                      "city": "Irvine",
+                      "country": "United States",
+                      "country_subdivision": "California",
+                      "postal_code": "92614"
+                    },
+                    "account_status": "Active",
+                    "updated_date": "2016-07-23 05:10:57",
+                    "external_id": [
+                      {
+                        "client_id": 123,
+                        "type": "Other",
+                        "value": "234489"
+                      }
+                    ],
+                    "supplier_tags": [
+                      {
+                        "tags": [
+                          {
+                            "id": 223,
+                            "name": "Sample Tag"
+                          }
+                        ],
+                        "client_id": 123
+                      }
+                    ],
+                    "flags": [
+                      {
+                        "client_id": 123,
+                        "client_name": "Oil Rig",
+                        "forced_expiration": "2018-06-30 00:00:00",
+                        "is_forced": "True",
+                        "system_flag": "Amber",
+                        "system_flag_details": [
+                          {
+                            "flag": "Amber",
+                            "forced_expiration": "2018-06-30 00:00:00",
+                            "is_forced": "True",
+                            "reasons": [
+                              {
+                                "85": "High TRIR, Missing Documentation"
+                              },
+                              {
+                                "42": "General Liability is missing"
+                              }
+                            ]
+                          },
+                          {
+                            "flag": "Green",
+                            "is_forced": "False",
+                            "forced_expiration": "",
+                            "reasons": [
+                              ""
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "trades": [
+                      {
+                        "frequency": "most",
+                        "service_offerings": [
+                          {
+                            "82": "Welding"
+                          },
+                          {
+                            "193": "Manufacturing"
+                          }
+                        ]
+                      }
+                    ],
+                    "service_types": [
+                      "On-site",
+                      "Off-site"
+                    ]
+                  }
+                ]
               }
             }
           },
