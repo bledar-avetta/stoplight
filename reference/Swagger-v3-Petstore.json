@@ -1,9 +1,8 @@
-
 {
   "openapi": "3.0.0",
   "info": {
     "version": "1.0.0",
-    "title": "Test Swagger Petstore",
+    "title": "Test Swagger v3 Petstore",
     "license": {
       "name": "MIT"
     }
