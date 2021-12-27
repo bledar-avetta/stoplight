@@ -2453,6 +2453,7 @@
                   "company_url": "www.bobsplumbing.com",
                   "description": "Providing plumbing services",
                   "primary_contact": {
+                    "id": "244871",
                     "email": "bob.smith@fakeemail.com",
                     "fax": "555 555 4567",
                     "first_name": "Bob",
@@ -2594,6 +2595,10 @@
                   "primary_contact": {
                     "type": "object",
                     "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
                       "email": {
                         "type": "string",
                         "minLength": 1
@@ -2616,6 +2621,7 @@
                       }
                     },
                     "required": [
+                      "id",
                       "email",
                       "fax",
                       "first_name",
@@ -2887,6 +2893,7 @@
                     "company_url": "www.bobsplumbing.com",
                     "description": "Providing plumbing services",
                     "primary_contact": {
+                      "id": "244871",
                       "email": "bob.smith@fakeemail.com",
                       "fax": "555 555 4567",
                       "first_name": "Bob",
